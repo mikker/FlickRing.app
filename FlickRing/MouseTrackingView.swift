@@ -2,8 +2,6 @@ import SwiftUI
 import AppKit
 
 class MouseTrackingView: NSView {
-    var userState: UserState?
-    
     var mouseLocationHandler: ((NSPoint?) -> Void)?
     
     override init(frame frameRect: NSRect) {
@@ -20,12 +18,24 @@ class MouseTrackingView: NSView {
         let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .mouseMoved, .activeAlways]
         let trackingArea = NSTrackingArea(rect: bounds, options: options, owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
+        print("Tracking area set up with bounds: \(bounds)")
+    }
+    
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        for trackingArea in trackingAreas {
+            removeTrackingArea(trackingArea)
+        }
+        setupTracking()
+        print("Tracking areas updated")
     }
     
     override func mouseMoved(with event: NSEvent) {
-        let location = convert(event.locationInWindow, from: nil)
-        mouseLocationHandler?(location)
-        userState?.objectWillChange.send() // Notify observers of change
+        DispatchQueue.main.async {
+            let location = self.convert(event.locationInWindow, from: nil)
+            print("Mouse moved to: \(location), event: \(event)")
+            self.mouseLocationHandler?(location)
+        }
     }
     
     override func mouseExited(with event: NSEvent) {
@@ -34,12 +44,10 @@ class MouseTrackingView: NSView {
 }
 
 struct MouseTrackingViewRepresentable: NSViewRepresentable {
-    @ObservedObject var userState: UserState
     var mouseLocationHandler: (NSPoint?) -> Void
     
     func makeNSView(context: Context) -> MouseTrackingView {
         let view = MouseTrackingView()
-        view.userState = userState
         view.mouseLocationHandler = mouseLocationHandler
         return view
     }

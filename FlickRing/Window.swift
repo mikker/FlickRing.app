@@ -14,19 +14,19 @@ class Window: NSPanel, NSWindowDelegate {
 
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: MainView.size, height: MainView.size),
-            styleMask: [.nonactivatingPanel],
+            styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered, defer: false
         )
 
-        isFloatingPanel = true
         isReleasedWhenClosed = false
         animationBehavior = .none
+        isOpaque = false
+        backgroundColor = .clear
+        isMovableByWindowBackground = false
+        level = .floating
 
         let view = MainView(userState: self.controller.userState)
         contentView = NSHostingView(rootView: view)
-
-        backgroundColor = .clear
-        isOpaque = false
 
         delegate = self
     }
@@ -35,18 +35,21 @@ class Window: NSPanel, NSWindowDelegate {
 
     override func makeKeyAndOrderFront(_ sender: Any?) {
         super.makeKeyAndOrderFront(sender)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
-    func show() {
+    func show(after: (() -> Void)?) {
         centerBelowCursor()
         makeKeyAndOrderFront(nil)
-        fadeInAndUp()
+        fadeIn {
+            after?()
+        }
     }
 
-    func hide(afterClose: (() -> Void)? = nil) {
-        fadeOutAndDown {
+    func hide(after: (() -> Void)?) {
+        fadeOut {
             self.close()
-            afterClose?()
+            after?()
         }
     }
 

@@ -15,23 +15,15 @@ struct MainView: View {
     }
     
     static let size: CGFloat = 200
-    static let centerSize: CGFloat = 50
+    static let centerSize: CGFloat = 100
     
     var body: some View {
         ZStack {
             backgroundCircle
             radialSections
-            sectionLabels
+//            sectionLabels
             centerCircle
-            middleLabel
-            MouseTrackingViewRepresentable(userState: userState) { location in
-                if let location = location {
-                    self.updateHoveredSection(for: location)
-                } else {
-                    self.userState.hoveredSection = .none
-                }
-            }
-            .allowsHitTesting(false)
+//            middleLabel
         }
         .frame(width: MainView.size, height: MainView.size)
     }
@@ -54,7 +46,7 @@ struct MainView: View {
     }
     
     private func sectionColor(for index: Int) -> Color {
-        let section: HoveredSection = [.up, .right, .down, .left][index]
+        let section: HoveredSection = [.down, .left, .up, .right][index]
         return userState.hoveredSection == section ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1)
     }
     
@@ -72,15 +64,19 @@ struct MainView: View {
     }
     
     private var centerCircle: some View {
-        VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-            .clipShape(Circle())
-            .overlay(Circle().stroke(Color.gray.opacity(0.3), lineWidth: 1))
-            .frame(width: MainView.centerSize, height: MainView.centerSize)
-            .background(
-                Circle()
-                    .fill(userState.hoveredSection == .middle ? Color.blue.opacity(0.3) : Color.clear)
-                    .frame(width: MainView.centerSize, height: MainView.centerSize)
-            )
+        ZStack {
+            VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+                .clipShape(Circle())
+                .frame(width: MainView.centerSize, height: MainView.centerSize)
+            
+            Circle()
+                .fill(userState.hoveredSection == .middle ? Color.blue.opacity(0.3) : Color.clear)
+                .frame(width: MainView.centerSize, height: MainView.centerSize)
+            
+            Circle()
+                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                .frame(width: MainView.centerSize, height: MainView.centerSize)
+        }
     }
     
     private var middleLabel: some View {
@@ -107,8 +103,6 @@ struct MainView: View {
                 userState.hoveredSection = .down
             }
         }
-        
-        print("Hovered section: \(userState.hoveredSection)")
     }
 }
 
