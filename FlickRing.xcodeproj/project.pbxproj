@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		42F495A82C8061FA001C2FEF /* FlickRingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495A72C8061FA001C2FEF /* FlickRingApp.swift */; };
+		42F495AA2C8061FA001C2FEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495A92C8061FA001C2FEF /* ContentView.swift */; };
+		42F495AC2C8061FB001C2FEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F495AB2C8061FB001C2FEF /* Assets.xcassets */; };
+		42F495AF2C8061FB001C2FEF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F495AE2C8061FB001C2FEF /* Preview Assets.xcassets */; };
+		42F495BA2C8061FB001C2FEF /* FlickRingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495B92C8061FB001C2FEF /* FlickRingTests.swift */; };
+		42F495C42C8061FB001C2FEF /* FlickRingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495C32C8061FB001C2FEF /* FlickRingUITests.swift */; };
+		42F495C62C8061FB001C2FEF /* FlickRingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495C52C8061FB001C2FEF /* FlickRingUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		42F495B62C8061FB001C2FEF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42F4959C2C8061FA001C2FEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42F495A32C8061FA001C2FEF;
+			remoteInfo = FlickRing;
+		};
+		42F495C02C8061FB001C2FEF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42F4959C2C8061FA001C2FEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42F495A32C8061FA001C2FEF;
+			remoteInfo = FlickRing;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		42F495A42C8061FA001C2FEF /* FlickRing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickRing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		42F495A72C8061FA001C2FEF /* FlickRingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickRingApp.swift; sourceTree = "<group>"; };
+		42F495A92C8061FA001C2FEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		42F495AB2C8061FB001C2FEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		42F495AE2C8061FB001C2FEF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		42F495B02C8061FB001C2FEF /* FlickRing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlickRing.entitlements; sourceTree = "<group>"; };
+		42F495B52C8061FB001C2FEF /* FlickRingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickRingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		42F495B92C8061FB001C2FEF /* FlickRingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickRingTests.swift; sourceTree = "<group>"; };
+		42F495BF2C8061FB001C2FEF /* FlickRingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlickRingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		42F495C32C8061FB001C2FEF /* FlickRingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickRingUITests.swift; sourceTree = "<group>"; };
+		42F495C52C8061FB001C2FEF /* FlickRingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickRingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		42F495A12C8061FA001C2FEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42F495B22C8061FB001C2FEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42F495BC2C8061FB001C2FEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		42F4959B2C8061FA001C2FEF = {
+			isa = PBXGroup;
+			children = (
+				42F495A62C8061FA001C2FEF /* FlickRing */,
+				42F495B82C8061FB001C2FEF /* FlickRingTests */,
+				42F495C22C8061FB001C2FEF /* FlickRingUITests */,
+				42F495A52C8061FA001C2FEF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		42F495A52C8061FA001C2FEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42F495A42C8061FA001C2FEF /* FlickRing.app */,
+				42F495B52C8061FB001C2FEF /* FlickRingTests.xctest */,
+				42F495BF2C8061FB001C2FEF /* FlickRingUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42F495A62C8061FA001C2FEF /* FlickRing */ = {
+			isa = PBXGroup;
+			children = (
+				42F495A72C8061FA001C2FEF /* FlickRingApp.swift */,
+				42F495A92C8061FA001C2FEF /* ContentView.swift */,
+				42F495AB2C8061FB001C2FEF /* Assets.xcassets */,
+				42F495B02C8061FB001C2FEF /* FlickRing.entitlements */,
+				42F495AD2C8061FB001C2FEF /* Preview Content */,
+			);
+			path = FlickRing;
+			sourceTree = "<group>";
+		};
+		42F495AD2C8061FB001C2FEF /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				42F495AE2C8061FB001C2FEF /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		42F495B82C8061FB001C2FEF /* FlickRingTests */ = {
+			isa = PBXGroup;
+			children = (
+				42F495B92C8061FB001C2FEF /* FlickRingTests.swift */,
+			);
+			path = FlickRingTests;
+			sourceTree = "<group>";
+		};
+		42F495C22C8061FB001C2FEF /* FlickRingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				42F495C32C8061FB001C2FEF /* FlickRingUITests.swift */,
+				42F495C52C8061FB001C2FEF /* FlickRingUITestsLaunchTests.swift */,
+			);
+			path = FlickRingUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42F495A32C8061FA001C2FEF /* FlickRing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42F495C92C8061FB001C2FEF /* Build configuration list for PBXNativeTarget "FlickRing" */;
+			buildPhases = (
+				42F495A02C8061FA001C2FEF /* Sources */,
+				42F495A12C8061FA001C2FEF /* Frameworks */,
+				42F495A22C8061FA001C2FEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlickRing;
+			productName = FlickRing;
+			productReference = 42F495A42C8061FA001C2FEF /* FlickRing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		42F495B42C8061FB001C2FEF /* FlickRingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42F495CC2C8061FB001C2FEF /* Build configuration list for PBXNativeTarget "FlickRingTests" */;
+			buildPhases = (
+				42F495B12C8061FB001C2FEF /* Sources */,
+				42F495B22C8061FB001C2FEF /* Frameworks */,
+				42F495B32C8061FB001C2FEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				42F495B72C8061FB001C2FEF /* PBXTargetDependency */,
+			);
+			name = FlickRingTests;
+			productName = FlickRingTests;
+			productReference = 42F495B52C8061FB001C2FEF /* FlickRingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		42F495BE2C8061FB001C2FEF /* FlickRingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42F495CF2C8061FB001C2FEF /* Build configuration list for PBXNativeTarget "FlickRingUITests" */;
+			buildPhases = (
+				42F495BB2C8061FB001C2FEF /* Sources */,
+				42F495BC2C8061FB001C2FEF /* Frameworks */,
+				42F495BD2C8061FB001C2FEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				42F495C12C8061FB001C2FEF /* PBXTargetDependency */,
+			);
+			name = FlickRingUITests;
+			productName = FlickRingUITests;
+			productReference = 42F495BF2C8061FB001C2FEF /* FlickRingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		42F4959C2C8061FA001C2FEF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					42F495A32C8061FA001C2FEF = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					42F495B42C8061FB001C2FEF = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 42F495A32C8061FA001C2FEF;
+					};
+					42F495BE2C8061FB001C2FEF = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 42F495A32C8061FA001C2FEF;
+					};
+				};
+			};
+			buildConfigurationList = 42F4959F2C8061FA001C2FEF /* Build configuration list for PBXProject "FlickRing" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 42F4959B2C8061FA001C2FEF;
+			productRefGroup = 42F495A52C8061FA001C2FEF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				42F495A32C8061FA001C2FEF /* FlickRing */,
+				42F495B42C8061FB001C2FEF /* FlickRingTests */,
+				42F495BE2C8061FB001C2FEF /* FlickRingUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		42F495A22C8061FA001C2FEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42F495AF2C8061FB001C2FEF /* Preview Assets.xcassets in Resources */,
+				42F495AC2C8061FB001C2FEF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42F495B32C8061FB001C2FEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42F495BD2C8061FB001C2FEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		42F495A02C8061FA001C2FEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42F495AA2C8061FA001C2FEF /* ContentView.swift in Sources */,
+				42F495A82C8061FA001C2FEF /* FlickRingApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42F495B12C8061FB001C2FEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42F495BA2C8061FB001C2FEF /* FlickRingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42F495BB2C8061FB001C2FEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42F495C62C8061FB001C2FEF /* FlickRingUITestsLaunchTests.swift in Sources */,
+				42F495C42C8061FB001C2FEF /* FlickRingUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		42F495B72C8061FB001C2FEF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42F495A32C8061FA001C2FEF /* FlickRing */;
+			targetProxy = 42F495B62C8061FB001C2FEF /* PBXContainerItemProxy */;
+		};
+		42F495C12C8061FB001C2FEF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42F495A32C8061FA001C2FEF /* FlickRing */;
+			targetProxy = 42F495C02C8061FB001C2FEF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		42F495C72C8061FB001C2FEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		42F495C82C8061FB001C2FEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		42F495CA2C8061FB001C2FEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FlickRing/FlickRing.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"FlickRing/Preview Content\"";
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRing;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		42F495CB2C8061FB001C2FEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FlickRing/FlickRing.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"FlickRing/Preview Content\"";
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRing;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		42F495CD2C8061FB001C2FEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlickRing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlickRing";
+			};
+			name = Debug;
+		};
+		42F495CE2C8061FB001C2FEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlickRing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FlickRing";
+			};
+			name = Release;
+		};
+		42F495D02C8061FB001C2FEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = FlickRing;
+			};
+			name = Debug;
+		};
+		42F495D12C8061FB001C2FEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = FlickRing;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		42F4959F2C8061FA001C2FEF /* Build configuration list for PBXProject "FlickRing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42F495C72C8061FB001C2FEF /* Debug */,
+				42F495C82C8061FB001C2FEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42F495C92C8061FB001C2FEF /* Build configuration list for PBXNativeTarget "FlickRing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42F495CA2C8061FB001C2FEF /* Debug */,
+				42F495CB2C8061FB001C2FEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42F495CC2C8061FB001C2FEF /* Build configuration list for PBXNativeTarget "FlickRingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42F495CD2C8061FB001C2FEF /* Debug */,
+				42F495CE2C8061FB001C2FEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42F495CF2C8061FB001C2FEF /* Build configuration list for PBXNativeTarget "FlickRingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42F495D02C8061FB001C2FEF /* Debug */,
+				42F495D12C8061FB001C2FEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 42F4959C2C8061FA001C2FEF /* Project object */;
+}
