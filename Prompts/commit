@@ -1,0 +1,5 @@
+check diff
+write good commit message
+template: `git commmit -m "Verb description"`
+
+Verb should be imperative, like "Fix", "Add", "Remove", "Update", "Refactor" or something like that.

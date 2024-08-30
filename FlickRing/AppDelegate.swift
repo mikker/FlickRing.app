@@ -1,76 +1,98 @@
 import Cocoa
-import Settings
 import Defaults
+import Settings
 import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var statusItem: StatusItem!
-    var controller: Controller!
-    var userState: UserState!
-    private var mouseListener: MouseListener?
+  var statusItem: StatusItem!
+  var controller: Controller!
+  var userState: UserState!
+  private var mouseListener: MouseListener?
+  @objc dynamic var isConfiguring = false
 
-    lazy var settingsWindowController = SettingsWindowController(
-        panes: [
-            Settings.Pane(
-                identifier: .general, title: "General",
-                toolbarIcon: NSImage(named: NSImage.preferencesGeneralName)!,
-                contentView: { GeneralPane() }
-            ),
-        ]
+  lazy var settingsWindowController = SettingsWindowController(
+    panes: [
+      Settings.Pane(
+        identifier: .general, title: "General",
+        toolbarIcon: NSImage(named: NSImage.preferencesGeneralName)!,
+        contentView: { GeneralPane() }
+      )
+    ]
+  )
+
+  func applicationDidFinishLaunching(_ aNotification: Notification) {
+    userState = UserState()
+    controller = Controller(userState: userState)
+    statusItem = StatusItem()
+
+    statusItem.handlePreferences = {
+      self.settingsWindowController.show()
+    }
+    statusItem.enable()
+
+    mouseListener = MouseListener { [weak self] type, event in
+      self?.handleMouseEvent(type: type, event: event)
+    }
+
+    if AXIsProcessTrusted() {
+      startListeningForMouseEvents()
+    } else {
+      requestAccessibilityPermission()
+    }
+
+    settingsWindowController.show()
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(handleConfigurationStateChange),
+      name: .configurationStateChanged,
+      object: nil
     )
+  }
 
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        userState = UserState()
-        controller = Controller(userState: userState)
-        statusItem = StatusItem()
-        
-        statusItem.handlePreferences = {
-            self.settingsWindowController.show()
-        }
-        statusItem.enable()
+  func startListeningForMouseEvents() {
+    mouseListener?.startListening()
+  }
 
-        mouseListener = MouseListener { [weak self] type, event in
-            self?.handleMouseEvent(type: type, event: event)
-        }
-
-        if AXIsProcessTrusted() {
-            startListeningForMouseEvents()
-        } else {
-            requestAccessibilityPermission()
-        }
-    }
-
-    func startListeningForMouseEvents() {
-        mouseListener?.startListening()
-    }
-
-    func handleMouseEvent(type: CGEventType, event: CGEvent) {
-        if event.getIntegerValueField(.mouseEventButtonNumber) == userState.selectedMouseButton {
-            if type == .otherMouseDown {
-                controller.show()
-            } else if type == .otherMouseUp {
-                controller.hide()
-            }
-        }
-    }
-
-    func requestAccessibilityPermission() {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
-        let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
-        
-        if accessibilityEnabled {
-            startListeningForMouseEvents()
-        }
-    }
+  func handleMouseEvent(type: CGEventType, event: CGEvent) {
+    let buttonNumber = event.getIntegerValueField(.mouseEventButtonNumber)
     
-    @IBAction
-    func settingsMenuItemActionHandler(_: NSMenuItem) {
-        settingsWindowController.show()
+    if isConfiguring {
+      if buttonNumber >= 2 {
+        NotificationCenter.default.post(name: .mouseButtonSelected, object: buttonNumber)
+      }
+    } else if buttonNumber == Defaults[.selectedMouseButton] {
+      if type == .otherMouseDown {
+        controller.show()
+      } else if type == .otherMouseUp {
+        controller.hide()
+      }
     }
+  }
+
+  func requestAccessibilityPermission() {
+    let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
+    let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
+
+    if accessibilityEnabled {
+      startListeningForMouseEvents()
+    }
+  }
+
+  @IBAction
+  func settingsMenuItemActionHandler(_: NSMenuItem) {
+    settingsWindowController.show()
+  }
+
+  @objc func handleConfigurationStateChange(_ notification: Notification) {
+    if let isConfiguring = notification.object as? Bool {
+      self.isConfiguring = isConfiguring
+    }
+  }
 }
 
 extension Notification.Name {
-    static let startListeningForMouseButton = Notification.Name("startListeningForMouseButton")
-    static let mouseButtonSelected = Notification.Name("mouseButtonSelected")
+  static let mouseButtonSelected = Notification.Name("mouseButtonSelected")
+  static let configurationStateChanged = Notification.Name("configurationStateChanged")
 }
