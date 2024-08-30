@@ -48,7 +48,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       requestAccessibilityPermission()
     }
 
-    settingsWindowController.show()
+    if Defaults[.showPreferencesOnLaunch] {
+      settingsWindowController.show()
+    }
 
     NotificationCenter.default.addObserver(
       self,
