@@ -23,6 +23,12 @@ class Controller {
 
   func hide() {
     let selectedSection = self.userState.hoveredSection
+
+    // Cancel the original mouse event if a direction was selected
+    if selectedSection != .none {
+      cancelOriginalMouseEvent()
+    }
+
     self.commit(selectedSection)
 
     window.hide {
@@ -30,11 +36,6 @@ class Controller {
     }
 
     removeEventMonitor()
-
-    // Cancel the original mouse event if a direction was selected
-    if selectedSection != .none {
-      cancelOriginalMouseEvent()
-    }
   }
 
   private func commit(_ section: HoveredSection) {
@@ -130,8 +131,11 @@ class Controller {
 
     // Create and post a mouse up event to cancel the original mouse down
     let cancelEvent = CGEvent(
-      mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos,
-      mouseButton: .center)
+      mouseEventSource: source,
+      mouseType: .otherMouseUp,
+      mouseCursorPosition: currentPos,
+      mouseButton: CGMouseButton(rawValue: UInt32(Defaults[.selectedMouseButton]))!
+    )
     cancelEvent?.post(tap: .cgAnnotatedSessionEventTap)
   }
 }

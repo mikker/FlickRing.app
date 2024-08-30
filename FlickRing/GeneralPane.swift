@@ -41,24 +41,19 @@ struct GeneralPane: View {
         actionRow(title: "Right", config: $rightAction)
       }
 
-      Settings.Section(title: "Appearance", bottomDivider: true) {
+      Settings.Section(title: "Appearance", bottomDivider: true, verticalAlignment: .center) {
         HStack {
-          Picker(selection: $selectedTheme, label: EmptyView()) {
-            ForEach(Theme.allCases) { theme in
-              HStack {
-                Circle()
-                  .fill(
-                    LinearGradient(
-                      gradient: theme.gradient, startPoint: .leading, endPoint: .trailing)
-                  )
-                  .frame(width: 20, height: 20)
-                Text(theme.rawValue.capitalized)
-              }
-              .tag(theme)
+          ForEach(Theme.allCases) { theme in
+            Button(action: {
+              selectedTheme = theme
+            }) {
+              themePreview(for: theme)
+                .frame(width: 30, height: 30)
             }
+            .buttonStyle(PlainButtonStyle())
+            .background(selectedTheme == theme ? Color.accentColor.opacity(0.2) : Color.clear)
+            .cornerRadius(4)
           }
-          .labelsHidden()
-          .frame(width: 150)
         }
       }
 
@@ -197,6 +192,39 @@ struct GeneralPane: View {
 
     // If we can't interpret the key, return a placeholder
     return "?"
+  }
+
+  private func themePreview(for theme: Theme) -> some View {
+    Group {
+      if theme == .rainbow {
+        Circle()
+          .fill(AngularGradient(gradient: theme.gradient, center: .center))
+      } else if theme == .system {
+        GeometryReader { geometry in
+          Path { path in
+            path.move(to: .zero)
+            path.addLine(to: CGPoint(x: geometry.size.width, y: 0))
+            path.addLine(to: CGPoint(x: geometry.size.width, y: geometry.size.height))
+            path.addLine(to: CGPoint(x: 0, y: geometry.size.height))
+            path.closeSubpath()
+          }
+          .fill(Color.white)
+
+          Path { path in
+            path.move(to: .zero)
+            path.addLine(to: CGPoint(x: geometry.size.width, y: geometry.size.height))
+            path.addLine(to: CGPoint(x: 0, y: geometry.size.height))
+            path.closeSubpath()
+          }
+          .fill(Color.gray)
+        }
+        .clipShape(Circle())
+      } else {
+        Circle()
+          .fill(LinearGradient(gradient: theme.gradient, startPoint: .leading, endPoint: .trailing))
+      }
+    }
+    .frame(width: 12, height: 12)
   }
 }
 
