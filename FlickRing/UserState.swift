@@ -8,7 +8,9 @@ enum HoveredSection: String {
 final class UserState: ObservableObject {
   @Published var hoveredSection: HoveredSection = .none
 
-  init() {}
+  init(hoveredSection: HoveredSection = .none) {
+    self.hoveredSection = hoveredSection
+  }
 
   func updateHoveredSection(for point: NSPoint) {
     let center = CGPoint(x: MainView.size / 2, y: MainView.size / 2)

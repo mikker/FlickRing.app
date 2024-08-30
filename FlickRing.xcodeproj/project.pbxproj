@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42D9CCA92C80B5A100D94E2D /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9CCA82C80B5A100D94E2D /* Defaults.swift */; };
+		42D9CCAD2C81CE2500D94E2D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9CCAB2C81CE2500D94E2D /* Theme.swift */; };
 		42F495AA2C8061FA001C2FEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495A92C8061FA001C2FEF /* ContentView.swift */; };
 		42F495AC2C8061FB001C2FEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F495AB2C8061FB001C2FEF /* Assets.xcassets */; };
 		42F495AF2C8061FB001C2FEF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F495AE2C8061FB001C2FEF /* Preview Assets.xcassets */; };
@@ -26,7 +27,6 @@
 		42F495EE2C80653D001C2FEF /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 42F495ED2C80653D001C2FEF /* LaunchAtLogin */; };
 		42F495F02C806626001C2FEF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495EF2C806626001C2FEF /* Settings.swift */; };
 		42F495F22C806634001C2FEF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495F12C806634001C2FEF /* MainView.swift */; };
-		42F495F42C806642001C2FEF /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495F32C806642001C2FEF /* VisualEffectBackground.swift */; };
 		42F495F62C806686001C2FEF /* NSWindow+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495F52C806686001C2FEF /* NSWindow+Animations.swift */; };
 		42F495FC2C80851F001C2FEF /* MouseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F495FB2C80851F001C2FEF /* MouseListener.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		42D9CCA82C80B5A100D94E2D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		42D9CCAB2C81CE2500D94E2D /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		42F495A42C8061FA001C2FEF /* FlickRing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickRing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F495A92C8061FA001C2FEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		42F495AB2C8061FB001C2FEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		42F495EA2C80649A001C2FEF /* GeneralPane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPane.swift; sourceTree = "<group>"; };
 		42F495EF2C806626001C2FEF /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		42F495F12C806634001C2FEF /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		42F495F32C806642001C2FEF /* VisualEffectBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
 		42F495F52C806686001C2FEF /* NSWindow+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Animations.swift"; sourceTree = "<group>"; };
 		42F495FB2C80851F001C2FEF /* MouseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,18 +130,18 @@
 				42F495D62C806333001C2FEF /* AppDelegate.swift */,
 				42F495A92C8061FA001C2FEF /* ContentView.swift */,
 				42F495DA2C80639B001C2FEF /* Controller.swift */,
+				42D9CCA82C80B5A100D94E2D /* Defaults.swift */,
 				42F495EA2C80649A001C2FEF /* GeneralPane.swift */,
 				42F495F12C806634001C2FEF /* MainView.swift */,
 				42F495FB2C80851F001C2FEF /* MouseListener.swift */,
 				42F495F52C806686001C2FEF /* NSWindow+Animations.swift */,
 				42F495EF2C806626001C2FEF /* Settings.swift */,
 				42F495E52C80645F001C2FEF /* StatusItem.swift */,
+				42D9CCAB2C81CE2500D94E2D /* Theme.swift */,
 				42F495DD2C80639C001C2FEF /* UserState.swift */,
-				42F495F32C806642001C2FEF /* VisualEffectBackground.swift */,
 				42F495D82C80637A001C2FEF /* Window.swift */,
 				42F495AB2C8061FB001C2FEF /* Assets.xcassets */,
 				42F495AD2C8061FB001C2FEF /* Preview Content */,
-				42D9CCA82C80B5A100D94E2D /* Defaults.swift */,
 			);
 			path = FlickRing;
 			sourceTree = "<group>";
@@ -339,7 +339,6 @@
 				42D9CCA92C80B5A100D94E2D /* Defaults.swift in Sources */,
 				42F495D72C806333001C2FEF /* AppDelegate.swift in Sources */,
 				42F495E12C80639C001C2FEF /* UserState.swift in Sources */,
-				42F495F42C806642001C2FEF /* VisualEffectBackground.swift in Sources */,
 				42F495F22C806634001C2FEF /* MainView.swift in Sources */,
 				42F495AA2C8061FA001C2FEF /* ContentView.swift in Sources */,
 				42F495FC2C80851F001C2FEF /* MouseListener.swift in Sources */,
@@ -348,6 +347,7 @@
 				42F495F02C806626001C2FEF /* Settings.swift in Sources */,
 				42F495EB2C80649A001C2FEF /* GeneralPane.swift in Sources */,
 				42F495D92C80637A001C2FEF /* Window.swift in Sources */,
+				42D9CCAD2C81CE2500D94E2D /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

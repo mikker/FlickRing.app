@@ -1,8 +1,8 @@
+import AppKit
 import Defaults
 import LaunchAtLogin
 import Settings
 import SwiftUI
-import AppKit
 
 struct GeneralPane: View {
   @State private var isListening = false
@@ -15,6 +15,8 @@ struct GeneralPane: View {
 
   @State private var lastKeyPressed: String = ""
   @FocusState private var focusedField: String?
+
+  @Default(.selectedTheme) private var selectedTheme
 
   private let contentWidth = 480.0
 
@@ -37,6 +39,27 @@ struct GeneralPane: View {
         actionRow(title: "Down", config: $downAction)
         actionRow(title: "Left", config: $leftAction)
         actionRow(title: "Right", config: $rightAction)
+      }
+
+      Settings.Section(title: "Appearance", bottomDivider: true) {
+        HStack {
+          Picker(selection: $selectedTheme, label: EmptyView()) {
+            ForEach(Theme.allCases) { theme in
+              HStack {
+                Circle()
+                  .fill(
+                    LinearGradient(
+                      gradient: theme.gradient, startPoint: .leading, endPoint: .trailing)
+                  )
+                  .frame(width: 20, height: 20)
+                Text(theme.rawValue.capitalized)
+              }
+              .tag(theme)
+            }
+          }
+          .labelsHidden()
+          .frame(width: 150)
+        }
       }
 
       Settings.Section(title: "App") {
@@ -80,45 +103,42 @@ struct GeneralPane: View {
   }
 
   private func actionRow(title: String, config: Binding<ActionConfig>) -> some View {
-    VStack(alignment: .leading) {
+    VStack(alignment: .leading, spacing: 8) {
       Text(title)
+        .font(.headline)
         .frame(width: 69, alignment: .leading)
 
-      HStack(alignment: .top) {
-        Picker("", selection: config.type) {
+      HStack(alignment: .top, spacing: 12) {
+        Picker(selection: config.type, label: EmptyView()) {
           ForEach(ActionType.allCases) { actionType in
             Text(actionType.rawValue).tag(actionType)
           }
         }
+        .labelsHidden()
         .frame(width: 140)
 
         switch config.wrappedValue.type {
         case .doNothing:
           EmptyView()
         case .sendKey:
-          TextField(
-            "Key",
-            text: .constant(keyEventToString(config.wrappedValue.keyEvent))
-          )
-          .frame(width: 80)
-          .multilineTextAlignment(.center)
-          .focused($focusedField, equals: title)
+          TextField("Key", text: .constant(keyEventToString(config.wrappedValue.keyEvent)))
+            .frame(width: 80)
+            .multilineTextAlignment(.center)
+            .focused($focusedField, equals: title)
         case .pressMouseButton:
-          HStack {
-            Picker("", selection: config.mouseButton) {
-              ForEach(2...9, id: \.self) { button in
-                Text("\(button)").tag(button)
-              }
+          Picker(selection: config.mouseButton, label: EmptyView()) {
+            ForEach(2...9, id: \.self) { button in
+              Text("\(button)").tag(button)
             }
-            .frame(width: 50)
           }
+          .labelsHidden()
+          .frame(width: 50)
         case .openURL:
-          HStack {
-            TextField("", text: config.url)
-          }
+          TextField("", text: config.url)
         }
       }
     }
+    .padding(.vertical, 4)
   }
 
   private func getActionConfig(for field: String) -> Binding<ActionConfig>? {
@@ -139,22 +159,22 @@ struct GeneralPane: View {
 
   private func keyEventToString(_ keyEvent: KeyEvent?) -> String {
     guard let keyEvent = keyEvent else { return "" }
-    
+
     var modifierString = ""
     let flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
-    
+
     if flags.contains(.maskControl) { modifierString += "⌃" }
     if flags.contains(.maskAlternate) { modifierString += "⌥" }
     if flags.contains(.maskShift) { modifierString += "⇧" }
     if flags.contains(.maskCommand) { modifierString += "⌘" }
-    
+
     return modifierString + keyEvent.character
   }
 
   private func keyToGlyph(_ event: NSEvent) -> String {
     let keyMap: [Int: String] = [
       126: "↑",  // Up Arrow
-       125: "↓",  // Down Arrow
+      125: "↓",  // Down Arrow
       123: "←",  // Left Arrow
       124: "→",  // Right Arrow
       36: "↩",  // Return

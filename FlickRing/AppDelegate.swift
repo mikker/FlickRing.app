@@ -24,9 +24,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     // Check if running in preview mode
     #if DEBUG
-    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-      return // Exit early if running in preview
-    }
+      if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+        return  // Exit early if running in preview
+      }
     #endif
 
     userState = UserState()
@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func handleMouseEvent(type: CGEventType, event: CGEvent) {
     let buttonNumber = event.getIntegerValueField(.mouseEventButtonNumber)
-    
+
     if isConfiguring {
       if buttonNumber >= 2 {
         NotificationCenter.default.post(name: .mouseButtonSelected, object: buttonNumber)

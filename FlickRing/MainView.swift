@@ -5,10 +5,12 @@
 //  Created by Mikkel Malmberg on 19/04/2024.
 //
 
+import Defaults
 import SwiftUI
 
 struct MainView: View {
   @ObservedObject var userState: UserState
+  @Default(.selectedTheme) private var selectedTheme: Theme
 
   init(userState: UserState) {
     self._userState = ObservedObject(wrappedValue: userState)
@@ -19,30 +21,48 @@ struct MainView: View {
 
   var body: some View {
     ZStack {
-      backgroundCircle
+      if selectedTheme == .system {
+        systemThemeView
+      } else {
+        themeCircle
+      }
       radialSections
-      //            sectionLabels
-      //            middleLabel
     }
     .mask(ringMask)
     .frame(width: MainView.size, height: MainView.size)
   }
 
-  private var backgroundCircle: some View {
+  private var systemThemeView: some View {
     VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-      .clipShape(Circle())
+      .frame(width: MainView.size, height: MainView.size)
+  }
+
+  private var themeCircle: some View {
+    Circle()
+      .fill(
+        AngularGradient(
+          gradient: selectedTheme.gradient,
+          center: .center
+        )
+      )
       .frame(width: MainView.size, height: MainView.size)
   }
 
   private var radialSections: some View {
     ForEach(0..<4, id: \.self) { index in
       RadialSection(startAngle: Double(index) * 90 + 45, endAngle: Double(index + 1) * 90 + 45)
-        .fill(sectionColor(for: index))
+        .fill(Color.white.opacity(sectionOpacity(for: index)))
         .overlay(
           RadialSection(startAngle: Double(index) * 90 + 45, endAngle: Double(index + 1) * 90 + 45)
-            .stroke(Color.gray.opacity(0.0), lineWidth: 1)
+            .stroke(Color.clear)
         )
     }
+  }
+
+  private func sectionOpacity(for index: Int) -> Double {
+    let section: HoveredSection = [.down, .left, .up, .right][index]
+    let minimumOpacity = selectedTheme == .system ? 0.2 : 0.0
+    return userState.hoveredSection == section ? 0.5 : minimumOpacity
   }
 
   private var ringMask: some View {
@@ -54,29 +74,6 @@ struct MainView: View {
           .frame(width: MainView.centerSize, height: MainView.centerSize)
           .blendMode(.destinationOut)
       )
-  }
-
-  private func sectionColor(for index: Int) -> Color {
-    let section: HoveredSection = [.down, .left, .up, .right][index]
-    return userState.hoveredSection == section ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1)
-  }
-
-  private var sectionLabels: some View {
-    VStack {
-      Text("Up").offset(y: -MainView.size / 5)
-      HStack {
-        Text("Left").offset(x: -MainView.size / 5)
-        Spacer().frame(width: MainView.centerSize)
-        Text("Right").offset(x: MainView.size / 5)
-      }
-      Text("Down").offset(y: MainView.size / 5)
-    }
-    .font(.system(size: 12))
-  }
-
-  private var middleLabel: some View {
-    Text("Middle")
-      .font(.system(size: 10))
   }
 
   private func updateHoveredSection(for point: NSPoint) {
@@ -118,8 +115,26 @@ struct RadialSection: Shape {
   }
 }
 
+struct VisualEffectView: NSViewRepresentable {
+  let material: NSVisualEffectView.Material
+  let blendingMode: NSVisualEffectView.BlendingMode
+
+  func makeNSView(context: Context) -> NSVisualEffectView {
+    let visualEffectView = NSVisualEffectView()
+    visualEffectView.material = material
+    visualEffectView.blendingMode = blendingMode
+    visualEffectView.state = .active
+    return visualEffectView
+  }
+
+  func updateNSView(_ visualEffectView: NSVisualEffectView, context: Context) {
+    visualEffectView.material = material
+    visualEffectView.blendingMode = blendingMode
+  }
+}
+
 struct MainView_Previews: PreviewProvider {
   static var previews: some View {
-    MainView(userState: UserState())
+    MainView(userState: UserState(hoveredSection: .left))
   }
 }

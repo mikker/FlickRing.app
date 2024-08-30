@@ -1,9 +1,9 @@
+import AppKit
+import Carbon
 import Cocoa
 import Combine
-import SwiftUI
 import Defaults
-import Carbon
-import AppKit
+import SwiftUI
 
 class Controller {
   var window: Window!
@@ -72,15 +72,17 @@ class Controller {
 
   private func simulateKeyEvent(_ keyEvent: KeyEvent?) {
     guard let keyEvent = keyEvent else { return }
-    
+
     let source = CGEventSource(stateID: .combinedSessionState)
-    
-    let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(keyEvent.keyCode), keyDown: true)
-    let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(keyEvent.keyCode), keyDown: false)
-    
+
+    let keyDown = CGEvent(
+      keyboardEventSource: source, virtualKey: CGKeyCode(keyEvent.keyCode), keyDown: true)
+    let keyUp = CGEvent(
+      keyboardEventSource: source, virtualKey: CGKeyCode(keyEvent.keyCode), keyDown: false)
+
     keyDown?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
     keyUp?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
-    
+
     keyDown?.post(tap: .cgAnnotatedSessionEventTap)
     keyUp?.post(tap: .cgAnnotatedSessionEventTap)
   }
@@ -89,8 +91,12 @@ class Controller {
     let source = CGEventSource(stateID: .combinedSessionState)
     let currentPos = NSEvent.mouseLocation
 
-    let clickDown = CGEvent(mouseEventSource: source, mouseType: .otherMouseDown, mouseCursorPosition: currentPos, mouseButton: button)
-    let clickUp = CGEvent(mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos, mouseButton: button)
+    let clickDown = CGEvent(
+      mouseEventSource: source, mouseType: .otherMouseDown, mouseCursorPosition: currentPos,
+      mouseButton: button)
+    let clickUp = CGEvent(
+      mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos,
+      mouseButton: button)
 
     clickDown?.post(tap: .cgAnnotatedSessionEventTap)
     clickUp?.post(tap: .cgAnnotatedSessionEventTap)
@@ -121,9 +127,11 @@ class Controller {
   private func cancelOriginalMouseEvent() {
     let currentPos = NSEvent.mouseLocation
     let source = CGEventSource(stateID: .combinedSessionState)
-    
+
     // Create and post a mouse up event to cancel the original mouse down
-    let cancelEvent = CGEvent(mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos, mouseButton: .center)
+    let cancelEvent = CGEvent(
+      mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos,
+      mouseButton: .center)
     cancelEvent?.post(tap: .cgAnnotatedSessionEventTap)
   }
 }
