@@ -16,6 +16,7 @@ extension Defaults.Keys {
   static let leftAction = Key<ActionConfig>("leftAction", default: ActionConfig())
   static let rightAction = Key<ActionConfig>("rightAction", default: ActionConfig())
   static let selectedTheme = Key<Theme>("selectedTheme", default: .system)
+  static let showPreferencesOnLaunch = Key<Bool>("showPreferencesOnLaunch", default: true)
 }
 
 enum ActionType: String, CaseIterable, Identifiable, Codable {

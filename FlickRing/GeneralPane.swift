@@ -58,6 +58,7 @@ struct GeneralPane: View {
       }
 
       Settings.Section(title: "App") {
+        Defaults.Toggle("Show this window on launch", key: .showPreferencesOnLaunch)
         LaunchAtLogin.Toggle()
       }
 

@@ -375,6 +375,7 @@
                     </connections>
                 </application>
                 <customObject id="elY-qP-5N9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="KjH-TN-y6c" customClass="SPUStandardUpdaterController"/>
                 <customObject id="7H0-Ae-Klq" customClass="AppDelegate" customModule="FlickRing" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>

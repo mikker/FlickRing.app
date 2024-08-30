@@ -2,13 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SchemeUserState</key>
-	<dict>
-		<key>FlickRing.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-	</dict>
+	<key>SUPublicEDKey</key>
+	<string>4ZfPYKvzE7b/uYW4B8f2v++7Bry/OmvYHCzl3g936KE=</string>
+	<key>SUFeedURL</key>
+	<string></string>
 </dict>
 </plist>
