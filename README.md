@@ -4,6 +4,13 @@
 
 Action ring for your normie mouse
 
+[Download latest version](https://flick-ring-updates.s3.amazonaws.com/FlickRing-latest.zip)
+
+## Behind the scenes
+
+- [Part 1](https://x.com/mikker/status/1829146750990344593)
+- [Part 2](https://x.com/mikker/status/1829484136718860775)
+
 ## License
 
 MIT
