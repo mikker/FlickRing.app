@@ -6,6 +6,8 @@
 //
 
 import Defaults
+import Carbon
+import AppKit
 
 extension Defaults.Keys {
   static let selectedMouseButton = Key<Int>("selectedMouseButton", default: 2)  // Default to middle button
@@ -26,9 +28,34 @@ enum ActionType: String, CaseIterable, Identifiable, Codable {
 
 struct ActionConfig: Codable, Defaults.Serializable {
   var type: ActionType = .doNothing
-  var keyCode: Int = 0
+  var keyEvent: KeyEvent?
   var mouseButton: Int = 2
   var url: String = ""
-  var modifiers: ModifierFlags = []
-  var key: String = ""
 }
+
+struct KeyEvent: Codable, Defaults.Serializable {
+  var keyCode: UInt16
+  var modifierFlags: UInt64
+  
+  init(keyCode: UInt16, modifierFlags: UInt64) {
+    self.keyCode = keyCode
+    self.modifierFlags = modifierFlags
+  }
+  
+  init(nsEvent: NSEvent) {
+    self.keyCode = nsEvent.keyCode
+    self.modifierFlags = UInt64(nsEvent.modifierFlags.rawValue)
+  }
+  
+  var character: String {
+    let source = CGEventSource(stateID: .combinedSessionState)
+    guard let event = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(keyCode), keyDown: true) else {
+      return "?"
+    }
+    event.flags = CGEventFlags(rawValue: modifierFlags)
+    
+    let nsEvent = NSEvent(cgEvent: event)
+    return nsEvent?.charactersIgnoringModifiers ?? "?"
+  }
+}
+

@@ -1,6 +1,9 @@
 import Cocoa
 import Combine
 import SwiftUI
+import Defaults
+import Carbon
+import AppKit
 
 class Controller {
   var window: Window!
@@ -19,50 +22,78 @@ class Controller {
   }
 
   func hide() {
-    self.commit(self.userState.hoveredSection)
+    let selectedSection = self.userState.hoveredSection
+    self.commit(selectedSection)
 
     window.hide {
       self.userState.clear()
     }
 
     removeEventMonitor()
-  }
 
-  private func commit(_ section: HoveredSection) {
-    switch section {
-    case .up:
-      print("up")
-
-      break
-    case .down:
-      print("down")
-      NSWorkspace.shared.open(
-        URL(string: "raycast://confetti")!,
-        configuration: DontActivateConfiguration.shared.configuration)
-      break
-    case .left:
-      print("left")
-      simulateKeyCombo(keyCode: 0x21, flags: .maskCommand)  // Command + [
-      break
-    case .right:
-      print("right")
-      simulateKeyCombo(keyCode: 0x1E, flags: .maskCommand)  // Command + ]
-      break
-    default: break
+    // Cancel the original mouse event if a direction was selected
+    if selectedSection != .none {
+      cancelOriginalMouseEvent()
     }
   }
 
-  private func simulateKeyCombo(keyCode: CGKeyCode, flags: CGEventFlags) {
+  private func commit(_ section: HoveredSection) {
+    let action: ActionConfig
+    switch section {
+    case .up:
+      action = Defaults[.upAction]
+    case .down:
+      action = Defaults[.downAction]
+    case .left:
+      action = Defaults[.leftAction]
+    case .right:
+      action = Defaults[.rightAction]
+    default:
+      return
+    }
+
+    executeAction(action)
+  }
+
+  private func executeAction(_ action: ActionConfig) {
+    switch action.type {
+    case .doNothing:
+      break
+    case .sendKey:
+      simulateKeyEvent(action.keyEvent)
+    case .pressMouseButton:
+      simulateMouseClick(button: CGMouseButton(rawValue: UInt32(action.mouseButton))!)
+    case .openURL:
+      if let url = URL(string: action.url) {
+        NSWorkspace.shared.open(url, configuration: DontActivateConfiguration.shared.configuration)
+      }
+    }
+  }
+
+  private func simulateKeyEvent(_ keyEvent: KeyEvent?) {
+    guard let keyEvent = keyEvent else { return }
+    
     let source = CGEventSource(stateID: .combinedSessionState)
-
-    let keyDown = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: true)
-    let keyUp = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: false)
-
-    keyDown?.flags = flags
-    keyUp?.flags = flags
-
+    
+    let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(keyEvent.keyCode), keyDown: true)
+    let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(keyEvent.keyCode), keyDown: false)
+    
+    keyDown?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
+    keyUp?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
+    
     keyDown?.post(tap: .cgAnnotatedSessionEventTap)
     keyUp?.post(tap: .cgAnnotatedSessionEventTap)
+  }
+
+  private func simulateMouseClick(button: CGMouseButton) {
+    let source = CGEventSource(stateID: .combinedSessionState)
+    let currentPos = NSEvent.mouseLocation
+
+    let clickDown = CGEvent(mouseEventSource: source, mouseType: .otherMouseDown, mouseCursorPosition: currentPos, mouseButton: button)
+    let clickUp = CGEvent(mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos, mouseButton: button)
+
+    clickDown?.post(tap: .cgAnnotatedSessionEventTap)
+    clickUp?.post(tap: .cgAnnotatedSessionEventTap)
   }
 
   private func setupEventMonitor() {
@@ -86,6 +117,15 @@ class Controller {
       eventMonitor = nil
     }
   }
+
+  private func cancelOriginalMouseEvent() {
+    let currentPos = NSEvent.mouseLocation
+    let source = CGEventSource(stateID: .combinedSessionState)
+    
+    // Create and post a mouse up event to cancel the original mouse down
+    let cancelEvent = CGEvent(mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos, mouseButton: .center)
+    cancelEvent?.post(tap: .cgAnnotatedSessionEventTap)
+  }
 }
 
 class DontActivateConfiguration {
@@ -97,3 +137,5 @@ class DontActivateConfiguration {
     configuration.activates = false
   }
 }
+
+// Remove the KeyCodeMap and keyCodeForString function

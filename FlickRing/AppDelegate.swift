@@ -22,6 +22,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   )
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    // Check if running in preview mode
+    #if DEBUG
+    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+      return // Exit early if running in preview
+    }
+    #endif
+
     userState = UserState()
     controller = Controller(userState: userState)
     statusItem = StatusItem()

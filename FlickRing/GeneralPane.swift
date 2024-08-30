@@ -4,17 +4,6 @@ import Settings
 import SwiftUI
 import AppKit
 
-struct ModifierFlags: OptionSet, Hashable, Codable, Defaults.Serializable, CaseIterable {
-  let rawValue: Int
-
-  static let cmd = ModifierFlags(rawValue: 1 << 0)
-  static let opt = ModifierFlags(rawValue: 1 << 1)
-  static let shift = ModifierFlags(rawValue: 1 << 2)
-  static let ctrl = ModifierFlags(rawValue: 1 << 3)
-
-  static var allCases: [ModifierFlags] = [.cmd, .opt, .shift, .ctrl]
-}
-
 struct GeneralPane: View {
   @State private var isListening = false
   @Default(.selectedMouseButton) private var selectedMouseButton
@@ -68,11 +57,10 @@ struct GeneralPane: View {
   }
 
   private func setupKeyboardMonitor() {
-    NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .flagsChanged]) { event in
-      if let field = focusedField, event.type == .keyDown {
+    NSEvent.addLocalMonitorForEvents(matching: [.keyDown]) { event in
+      if let field = focusedField {
         if let actionConfig = self.getActionConfig(for: field) {
-          actionConfig.key.wrappedValue = self.keyToGlyph(event)
-          actionConfig.modifiers.wrappedValue = ModifierFlags(event: event)
+          actionConfig.wrappedValue.keyEvent = KeyEvent(nsEvent: event)
         }
         focusedField = nil
         return nil
@@ -102,7 +90,7 @@ struct GeneralPane: View {
             Text(actionType.rawValue).tag(actionType)
           }
         }
-        .frame(width: 180)
+        .frame(width: 140)
 
         switch config.wrappedValue.type {
         case .doNothing:
@@ -110,7 +98,7 @@ struct GeneralPane: View {
         case .sendKey:
           TextField(
             "Key",
-            text: .constant(config.modifiers.wrappedValue.keyEquivalent + config.key.wrappedValue)
+            text: .constant(keyEventToString(config.wrappedValue.keyEvent))
           )
           .frame(width: 80)
           .multilineTextAlignment(.center)
@@ -149,10 +137,24 @@ struct GeneralPane: View {
     }
   }
 
+  private func keyEventToString(_ keyEvent: KeyEvent?) -> String {
+    guard let keyEvent = keyEvent else { return "" }
+    
+    var modifierString = ""
+    let flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
+    
+    if flags.contains(.maskControl) { modifierString += "⌃" }
+    if flags.contains(.maskAlternate) { modifierString += "⌥" }
+    if flags.contains(.maskShift) { modifierString += "⇧" }
+    if flags.contains(.maskCommand) { modifierString += "⌘" }
+    
+    return modifierString + keyEvent.character
+  }
+
   private func keyToGlyph(_ event: NSEvent) -> String {
     let keyMap: [Int: String] = [
       126: "↑",  // Up Arrow
-      125: "↓",  // Down Arrow
+       125: "↓",  // Down Arrow
       123: "←",  // Left Arrow
       124: "→",  // Right Arrow
       36: "↩",  // Return
@@ -178,71 +180,8 @@ struct GeneralPane: View {
   }
 }
 
-struct ModifierPicker: View {
-  @Binding var selectedModifiers: ModifierFlags
-
-  var body: some View {
-    HStack(spacing: 4) {
-      ToggleButton(
-        title: "⌘", isSelected: selectedModifiers.contains(.cmd), action: { toggle(.cmd) })
-      ToggleButton(
-        title: "⌥", isSelected: selectedModifiers.contains(.opt), action: { toggle(.opt) })
-      ToggleButton(
-        title: "⇧", isSelected: selectedModifiers.contains(.shift), action: { toggle(.shift) })
-      ToggleButton(
-        title: "⌃", isSelected: selectedModifiers.contains(.ctrl), action: { toggle(.ctrl) })
-    }
-  }
-
-  private func toggle(_ modifier: ModifierFlags) {
-    if selectedModifiers.contains(modifier) {
-      selectedModifiers.remove(modifier)
-    } else {
-      selectedModifiers.insert(modifier)
-    }
-  }
-}
-
-struct ToggleButton: View {
-  let title: String
-  let isSelected: Bool
-  let action: () -> Void
-
-  var body: some View {
-    Button(action: action) {
-      Text(title)
-        .font(.system(size: 12))
-        .padding(.horizontal, 6)
-        .padding(.vertical, 2)
-        .background(isSelected ? Color.accentColor : Color.clear)
-        .foregroundColor(isSelected ? .white : .primary)
-        .cornerRadius(4)
-    }
-    .buttonStyle(PlainButtonStyle())
-  }
-}
-
 struct GeneralPane_Previews: PreviewProvider {
   static var previews: some View {
     GeneralPane()
-  }
-}
-
-extension ModifierFlags {
-  init(event: NSEvent) {
-    self.init()
-    if event.modifierFlags.contains(.command) { self.insert(.cmd) }
-    if event.modifierFlags.contains(.option) { self.insert(.opt) }
-    if event.modifierFlags.contains(.shift) { self.insert(.shift) }
-    if event.modifierFlags.contains(.control) { self.insert(.ctrl) }
-  }
-
-  var keyEquivalent: String {
-    var result = ""
-    if self.contains(.ctrl) { result += "^" }
-    if self.contains(.opt) { result += "⌥" }
-    if self.contains(.shift) { result += "⇧" }
-    if self.contains(.cmd) { result += "⌘" }
-    return result
   }
 }

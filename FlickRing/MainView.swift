@@ -22,9 +22,9 @@ struct MainView: View {
       backgroundCircle
       radialSections
       //            sectionLabels
-      centerCircle
       //            middleLabel
     }
+    .mask(ringMask)
     .frame(width: MainView.size, height: MainView.size)
   }
 
@@ -40,9 +40,20 @@ struct MainView: View {
         .fill(sectionColor(for: index))
         .overlay(
           RadialSection(startAngle: Double(index) * 90 + 45, endAngle: Double(index + 1) * 90 + 45)
-            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+            .stroke(Color.gray.opacity(0.0), lineWidth: 1)
         )
     }
+  }
+
+  private var ringMask: some View {
+    Circle()
+      .frame(width: MainView.size, height: MainView.size)
+      .overlay(
+        Circle()
+          .fill(Color.black)
+          .frame(width: MainView.centerSize, height: MainView.centerSize)
+          .blendMode(.destinationOut)
+      )
   }
 
   private func sectionColor(for index: Int) -> Color {
@@ -61,22 +72,6 @@ struct MainView: View {
       Text("Down").offset(y: MainView.size / 5)
     }
     .font(.system(size: 12))
-  }
-
-  private var centerCircle: some View {
-    ZStack {
-      VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-        .clipShape(Circle())
-        .frame(width: MainView.centerSize, height: MainView.centerSize)
-
-      Circle()
-        .fill(userState.hoveredSection == .middle ? Color.blue.opacity(0.3) : Color.clear)
-        .frame(width: MainView.centerSize, height: MainView.centerSize)
-
-      Circle()
-        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-        .frame(width: MainView.centerSize, height: MainView.centerSize)
-    }
   }
 
   private var middleLabel: some View {
