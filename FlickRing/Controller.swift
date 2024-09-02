@@ -169,7 +169,7 @@ class Controller {
       default:
         distance = 0
       }
-      let scrollAmount = distance * 0.1  // Adjust the multiplier to control scroll speed
+      let scrollAmount = distance * 0.05  // Adjusted multiplier to make scrolling slower
       self.simulateScroll(amount: scrollAmount)
     }
   }
