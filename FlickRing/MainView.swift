@@ -16,8 +16,8 @@ struct MainView: View {
     self._userState = ObservedObject(wrappedValue: userState)
   }
 
-  static let size: CGFloat = 200
-  static let centerSize: CGFloat = 100
+  static let size: CGFloat = 160
+  static let centerSize: CGFloat = 70
 
   var body: some View {
     ZStack {
