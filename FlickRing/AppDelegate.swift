@@ -81,11 +81,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func requestAccessibilityPermission() {
-    let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
-    let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
+    let promptKey = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+    let opts = [promptKey: true] as CFDictionary
+    let accessibilityEnabled = AXIsProcessTrustedWithOptions(opts)
 
     if accessibilityEnabled {
       startListeningForMouseEvents()
+    } else {
+      showAlertForAccessibilityPermission()
+    }
+  }
+
+  func showAlertForAccessibilityPermission() {
+    let alert = NSAlert()
+    alert.messageText = "Accessibility Permission Required"
+    alert.informativeText = "Please enable accessibility permissions in System Preferences."
+    alert.alertStyle = .warning
+    alert.addButton(withTitle: "OK")
+    alert.addButton(withTitle: "Open System Preferences")
+
+    let response = alert.runModal()
+    if response == .alertSecondButtonReturn {
+      openSystemPreferences()
+    }
+  }
+
+  func openSystemPreferences() {
+    if let url = URL(
+      string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")
+    {
+      NSWorkspace.shared.open(url)
     }
   }
 
