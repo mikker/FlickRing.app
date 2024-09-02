@@ -1,10 +1,13 @@
 import Cocoa
 import Defaults
 import Settings
+import Sparkle
 import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
+  @IBOutlet var updateController: SPUStandardUpdaterController!
+
   var statusItem: StatusItem!
   var controller: Controller!
   var userState: UserState!
@@ -36,6 +39,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     statusItem.handlePreferences = {
       self.settingsWindowController.show()
     }
+    statusItem.handleUpdates = {
+      self.updateController.checkForUpdates(nil)
+    }
+
     statusItem.enable()
 
     mouseListener = MouseListener { [weak self] type, event in

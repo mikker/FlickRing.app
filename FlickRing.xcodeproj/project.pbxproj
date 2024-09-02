@@ -53,7 +53,7 @@
 		42D9CCA82C80B5A100D94E2D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		42D9CCAB2C81CE2500D94E2D /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		42D9CCB22C81F25B00D94E2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		42F495A42C8061FA001C2FEF /* FlickRing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickRing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		42F495A42C8061FA001C2FEF /* FlickRing β.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FlickRing β.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F495A92C8061FA001C2FEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		42F495AB2C8061FB001C2FEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42F495AE2C8061FB001C2FEF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 		42F495A52C8061FA001C2FEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42F495A42C8061FA001C2FEF /* FlickRing.app */,
+				42F495A42C8061FA001C2FEF /* FlickRing β.app */,
 				42F495B52C8061FB001C2FEF /* FlickRingTests.xctest */,
 				42F495BF2C8061FB001C2FEF /* FlickRingUITests.xctest */,
 			);
@@ -199,7 +199,7 @@
 				42D9CCB02C81F1C000D94E2D /* Sparkle */,
 			);
 			productName = FlickRing;
-			productReference = 42F495A42C8061FA001C2FEF /* FlickRing.app */;
+			productReference = 42F495A42C8061FA001C2FEF /* FlickRing β.app */;
 			productType = "com.apple.product-type.application";
 		};
 		42F495B42C8061FB001C2FEF /* FlickRingTests */ = {
@@ -512,7 +512,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FlickRing/FlickRing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -534,8 +533,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brnbw.FlickRing;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brnbw.FlickRing-dev";
+				PRODUCT_NAME = "$(TARGET_NAME) β";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -545,7 +544,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FlickRing/FlickRing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;

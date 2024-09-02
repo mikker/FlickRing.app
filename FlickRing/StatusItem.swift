@@ -4,6 +4,7 @@ class StatusItem {
   var statusItem: NSStatusItem?
 
   var handlePreferences: (() -> Void)?
+  var handleUpdates: (() -> Void)?
 
   func enable() {
     statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -25,6 +26,12 @@ class StatusItem {
     preferencesItem.target = self
     menu.addItem(preferencesItem)
 
+    let updatesItem = NSMenuItem(
+      title: "Check for updates", action: #selector(checkForUpdates), keyEquivalent: ""
+    )
+    updatesItem.target = self
+    menu.addItem(updatesItem)
+
     menu.addItem(NSMenuItem.separator())
 
     menu.addItem(
@@ -37,5 +44,9 @@ class StatusItem {
 
   @objc func showPreferences() {
     handlePreferences?()
+  }
+
+  @objc func checkForUpdates() {
+    handleUpdates?()
   }
 }

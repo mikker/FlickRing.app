@@ -34,6 +34,4 @@ cp -f "$FILENAME" "Updates/$APP_NAME-latest.zip"
 s3cmd sync -F -P Updates/*.{xml,zip} s3://$BUCKET
 
 rm -rf "Updates/$APP_NAME.app"
-
-git add Updates/ ./**/Info.plist
-git commit -m "Release build $BUILD"
+rm $FILENAME

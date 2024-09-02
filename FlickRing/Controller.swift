@@ -156,7 +156,7 @@ class Controller {
   private func startScrollTimer(direction: HoveredSection) {
     stopScrollTimer()
 
-      scrollTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
+    scrollTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
       guard let self = self, let initialPos = self.initialMousePosition else { return }
       let currentPos = NSEvent.mouseLocation
       var distance: CGFloat
@@ -169,7 +169,7 @@ class Controller {
       default:
         distance = 0
       }
-      let scrollAmount = distance * 0.1 // Adjust the multiplier to control scroll speed
+      let scrollAmount = distance * 0.1  // Adjust the multiplier to control scroll speed
       self.simulateScroll(amount: scrollAmount)
     }
   }
