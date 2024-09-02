@@ -2,7 +2,7 @@ import Defaults
 import SwiftUI
 
 enum HoveredSection: String {
-  case up, right, down, left, middle, none
+  case up, right, down, left, none
 }
 
 final class UserState: ObservableObject {
@@ -18,7 +18,7 @@ final class UserState: ObservableObject {
     let dy = point.y - center.y
 
     if dx * dx + dy * dy <= (MainView.centerSize / 2) * (MainView.centerSize / 2) {
-      hoveredSection = .middle
+      hoveredSection = .none
     } else {
       let angle = atan2(dy, dx) * (180 / .pi)
       if angle >= -45 && angle < 45 {
@@ -34,6 +34,6 @@ final class UserState: ObservableObject {
   }
 
   func clear() {
-    hoveredSection = .middle
+    hoveredSection = .none
   }
 }

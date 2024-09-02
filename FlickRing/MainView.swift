@@ -82,7 +82,7 @@ struct MainView: View {
     let dy = point.y - center.y
 
     if dx * dx + dy * dy <= (MainView.centerSize / 2) * (MainView.centerSize / 2) {
-      userState.hoveredSection = .middle
+      userState.hoveredSection = .none
     } else {
       let angle = atan2(dy, dx) * (180 / .pi)
       if angle >= -45 && angle < 45 {
