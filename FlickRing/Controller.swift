@@ -9,13 +9,23 @@ class Controller {
   var window: Window!
   var userState: UserState
   private var eventMonitor: Any?
+  private var scrollTimer: Timer?
+  private var cancellable: AnyCancellable?
+  private var initialMousePosition: CGPoint?
 
   init(userState: UserState) {
     self.userState = userState
     self.window = Window(controller: self)
+    self.cancellable = userState.$hoveredSection
+      .removeDuplicates()
+      .sink { [weak self] section in
+        self?.hover(section)
+      }
   }
 
   func show() {
+    self.initialMousePosition = NSEvent.mouseLocation
+
     window.show {
       self.setupEventMonitor()
     }
@@ -24,7 +34,6 @@ class Controller {
   func hide() {
     let selectedSection = self.userState.hoveredSection
 
-    // Cancel the original mouse event if a direction was selected
     if selectedSection != .none {
       cancelOriginalMouseEvent()
     }
@@ -36,6 +45,7 @@ class Controller {
     }
 
     removeEventMonitor()
+    stopScrollTimer()
   }
 
   private func commit(_ section: HoveredSection) {
@@ -56,6 +66,30 @@ class Controller {
     executeAction(action)
   }
 
+  private func hover(_ section: HoveredSection) {
+    stopScrollTimer()
+
+    let action: ActionConfig
+    switch section {
+    case .up:
+      action = Defaults[.upAction]
+    case .down:
+      action = Defaults[.downAction]
+    case .left:
+      action = Defaults[.leftAction]
+    case .right:
+      action = Defaults[.rightAction]
+    default:
+      return
+    }
+
+    switch action.type {
+    case .scrollUp: startScrollTimer(direction: .up)
+    case .scrollDown: startScrollTimer(direction: .down)
+    default: break
+    }
+  }
+
   private func executeAction(_ action: ActionConfig) {
     switch action.type {
     case .doNothing:
@@ -68,6 +102,8 @@ class Controller {
       if let url = URL(string: action.url) {
         NSWorkspace.shared.open(url, configuration: DontActivateConfiguration.shared.configuration)
       }
+    case .scrollUp: break
+    case .scrollDown: break
     }
   }
 
@@ -101,6 +137,46 @@ class Controller {
 
     clickDown?.post(tap: .cgAnnotatedSessionEventTap)
     clickUp?.post(tap: .cgAnnotatedSessionEventTap)
+  }
+
+  private func simulateScroll(amount: Double) {
+    let source = CGEventSource(stateID: .combinedSessionState)
+
+    let scrollEvent = CGEvent(
+      scrollWheelEvent2Source: source,
+      units: .pixel,
+      wheelCount: 1,
+      wheel1: Int32(amount),
+      wheel2: 0,
+      wheel3: 0
+    )
+    scrollEvent?.post(tap: .cghidEventTap)
+  }
+
+  private func startScrollTimer(direction: HoveredSection) {
+    stopScrollTimer()
+
+      scrollTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
+      guard let self = self, let initialPos = self.initialMousePosition else { return }
+      let currentPos = NSEvent.mouseLocation
+      var distance: CGFloat
+      switch direction {
+      case .up:
+        distance = initialPos.y - currentPos.y
+      case .down:
+        distance = currentPos.y - initialPos.y
+        distance = -distance
+      default:
+        distance = 0
+      }
+      let scrollAmount = distance * 0.1 // Adjust the multiplier to control scroll speed
+      self.simulateScroll(amount: scrollAmount)
+    }
+  }
+
+  private func stopScrollTimer() {
+    scrollTimer?.invalidate()
+    scrollTimer = nil
   }
 
   private func setupEventMonitor() {
@@ -149,5 +225,3 @@ class DontActivateConfiguration {
     configuration.activates = false
   }
 }
-
-// Remove the KeyCodeMap and keyCodeForString function

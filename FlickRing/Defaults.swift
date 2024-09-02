@@ -24,6 +24,8 @@ enum ActionType: String, CaseIterable, Identifiable, Codable {
   case sendKey = "Send Key"
   case pressMouseButton = "Mouse Button"
   case openURL = "Open URL"
+  case scrollUp = "Scroll Up"
+  case scrollDown = "Scroll Down"
 
   var id: String { self.rawValue }
 }

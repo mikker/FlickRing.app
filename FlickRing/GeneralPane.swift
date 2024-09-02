@@ -131,6 +131,8 @@ struct GeneralPane: View {
           .frame(width: 50)
         case .openURL:
           TextField("", text: config.url)
+        case .scrollUp, .scrollDown:
+          EmptyView()  // No UI for configuring scroll amount
         }
       }
     }
