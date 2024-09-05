@@ -70,12 +70,11 @@ class Controller {
     let showWindow = { [weak self] in
       guard let self = self else { return }
       if self.window.isVisible { return }
-      self.window.show(at: initialLocation) {
-        self.setupEventMonitor()
-      }
+      self.window.show(at: initialLocation) {}
     }
 
-    // Cancel any existing delay or monitor
+    setupEventMonitor()
+    
     cancelShowDelay()
 
     // Start monitoring for mouse movement
@@ -133,13 +132,6 @@ class Controller {
     if let monitor = self.moveMonitor {
       NSEvent.removeMonitor(monitor)
       self.moveMonitor = nil
-    }
-  }
-
-  @objc private func delayedShow() {
-    if window.isVisible { return }
-    window.show(at: NSEvent.mouseLocation) {
-      self.setupEventMonitor()
     }
   }
 
