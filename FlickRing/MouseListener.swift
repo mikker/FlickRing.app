@@ -1,10 +1,12 @@
 import Cocoa
 
+typealias Handler = (CGEventType, CGEvent) -> Bool
+
 class MouseListener {
-  private var eventHandler: ((CGEventType, CGEvent) -> Void)?
+  private var eventHandler: Handler?
   private var eventTap: CFMachPort?
 
-  init(handler: @escaping (CGEventType, CGEvent) -> Void) {
+  init(handler: @escaping Handler) {
     self.eventHandler = handler
   }
 
@@ -20,8 +22,8 @@ class MouseListener {
         eventsOfInterest: CGEventMask(eventMask),
         callback: { (proxy, type, event, refcon) -> Unmanaged<CGEvent>? in
           let listener = Unmanaged<MouseListener>.fromOpaque(refcon!).takeUnretainedValue()
-          listener.eventHandler?(type, event)
-          return Unmanaged.passRetained(event)
+          let shouldHandle = listener.eventHandler?(type, event) ?? false
+          return shouldHandle ? nil : Unmanaged.passRetained(event)
         },
         userInfo: Unmanaged.passUnretained(self).toOpaque()
       )
@@ -34,6 +36,14 @@ class MouseListener {
 
     let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
+    CGEvent.tapEnable(tap: eventTap, enable: true)
+  }
+
+  func executeWithoutListening(_ callback: () -> Void) {
+    guard let eventTap = eventTap else { return }
+
+    CGEvent.tapEnable(tap: eventTap, enable: false)
+    callback()
     CGEvent.tapEnable(tap: eventTap, enable: true)
   }
 

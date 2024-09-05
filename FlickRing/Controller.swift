@@ -8,10 +8,13 @@ import SwiftUI
 class Controller {
   var window: Window!
   var userState: UserState
+  private var mouseListener: MouseListener?
   private var eventMonitor: Any?
   private var scrollTimer: Timer?
   private var cancellable: AnyCancellable?
   private var initialMousePosition: CGPoint?
+  private var initialEvent: CGEvent?
+  @objc dynamic var isConfiguring = false
 
   init(userState: UserState) {
     self.userState = userState
@@ -21,10 +24,45 @@ class Controller {
       .sink { [weak self] section in
         self?.hover(section)
       }
+    setupMouseListener()
   }
 
-  func show() {
+  private func setupMouseListener() {
+    mouseListener = MouseListener { [weak self] type, event in
+      return self?.handleMouseEvent(type: type, event: event) ?? false
+    }
+  }
+
+  func startListeningForMouseEvents() {
+    mouseListener?.startListening()
+  }
+
+  func handleMouseEvent(type: CGEventType, event: CGEvent) -> Bool {
+    let buttonNumber = event.getIntegerValueField(.mouseEventButtonNumber)
+
+    if isConfiguring {
+      if buttonNumber >= 2 {
+        NotificationCenter.default.post(name: .mouseButtonSelected, object: buttonNumber)
+      }
+      return true
+    } else if buttonNumber == Defaults[.selectedMouseButton] {
+      if type == .otherMouseDown {
+        show(type: type, event: event)
+      } else if type == .otherMouseUp {
+        hide()
+      }
+      return true
+    }
+
+    return false
+  }
+
+  func show(type: CGEventType, event: CGEvent) {
     self.initialMousePosition = NSEvent.mouseLocation
+
+    if type == .otherMouseDown {
+      self.initialEvent = event
+    }
 
     window.show {
       self.setupEventMonitor()
@@ -34,14 +72,33 @@ class Controller {
   func hide() {
     let selectedSection = self.userState.hoveredSection
 
-    if selectedSection != .none {
-      cancelOriginalMouseEvent()
-    }
-
     self.commit(selectedSection)
 
     window.hide {
       self.userState.clear()
+
+      if let initialEvent = self.initialEvent, selectedSection == .none {
+        self.mouseListener?.executeWithoutListening {
+          let currentLocation = NSEvent.mouseLocation
+          let cgCurrentLocation = CGPoint(
+            x: currentLocation.x, y: CGFloat(NSScreen.main?.frame.height ?? 0) - currentLocation.y)
+
+          let mouseDownEvent = CGEvent(
+            mouseEventSource: nil, mouseType: .otherMouseDown,
+            mouseCursorPosition: cgCurrentLocation,
+            mouseButton: CGMouseButton(
+              rawValue: UInt32(initialEvent.getIntegerValueField(.mouseEventButtonNumber)))!)
+          mouseDownEvent?.post(tap: .cghidEventTap)
+
+          let mouseUpEvent = CGEvent(
+            mouseEventSource: nil, mouseType: .otherMouseUp, mouseCursorPosition: cgCurrentLocation,
+            mouseButton: CGMouseButton(
+              rawValue: UInt32(initialEvent.getIntegerValueField(.mouseEventButtonNumber)))!)
+          mouseUpEvent?.post(tap: .cghidEventTap)
+          
+          self.initialEvent = nil
+        }
+      }
     }
 
     removeEventMonitor()
@@ -96,7 +153,7 @@ class Controller {
     case .sendKey:
       simulateKeyEvent(action.keyEvent)
     case .pressMouseButton:
-      simulateMouseClick(button: CGMouseButton(rawValue: UInt32(action.mouseButton))!)
+      simulateMouseClick(button: CGMouseButton(rawValue: UInt32(action.mouseButton)) ?? .center)
     case .openURL:
       if let url = URL(string: action.url) {
         NSWorkspace.shared.open(url, configuration: DontActivateConfiguration.shared.configuration)
@@ -200,18 +257,8 @@ class Controller {
     }
   }
 
-  private func cancelOriginalMouseEvent() {
-    let currentPos = NSEvent.mouseLocation
-    let source = CGEventSource(stateID: .combinedSessionState)
-
-    // Create and post a mouse up event to cancel the original mouse down
-    let cancelEvent = CGEvent(
-      mouseEventSource: source,
-      mouseType: .otherMouseUp,
-      mouseCursorPosition: currentPos,
-      mouseButton: CGMouseButton(rawValue: UInt32(Defaults[.selectedMouseButton]))!
-    )
-    cancelEvent?.post(tap: .cgAnnotatedSessionEventTap)
+  func setConfiguring(_ configuring: Bool) {
+    isConfiguring = configuring
   }
 }
 

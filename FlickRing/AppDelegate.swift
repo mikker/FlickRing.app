@@ -11,8 +11,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   var statusItem: StatusItem!
   var controller: Controller!
   var userState: UserState!
-  private var mouseListener: MouseListener?
-  @objc dynamic var isConfiguring = false
 
   lazy var settingsWindowController = SettingsWindowController(
     panes: [
@@ -45,10 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     statusItem.enable()
 
-    mouseListener = MouseListener { [weak self] type, event in
-      self?.handleMouseEvent(type: type, event: event)
-    }
-
     if AXIsProcessTrusted() {
       startListeningForMouseEvents()
     } else {
@@ -68,23 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func startListeningForMouseEvents() {
-    mouseListener?.startListening()
-  }
-
-  func handleMouseEvent(type: CGEventType, event: CGEvent) {
-    let buttonNumber = event.getIntegerValueField(.mouseEventButtonNumber)
-
-    if isConfiguring {
-      if buttonNumber >= 2 {
-        NotificationCenter.default.post(name: .mouseButtonSelected, object: buttonNumber)
-      }
-    } else if buttonNumber == Defaults[.selectedMouseButton] {
-      if type == .otherMouseDown {
-        controller.show()
-      } else if type == .otherMouseUp {
-        controller.hide()
-      }
-    }
+    controller.startListeningForMouseEvents()
   }
 
   func requestAccessibilityPermission() {
@@ -128,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   @objc func handleConfigurationStateChange(_ notification: Notification) {
     if let isConfiguring = notification.object as? Bool {
-      self.isConfiguring = isConfiguring
+      controller.setConfiguring(isConfiguring)
     }
   }
 }
