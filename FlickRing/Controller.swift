@@ -84,8 +84,7 @@ class Controller {
     }
 
     switch action.type {
-    case .scrollUp: startScrollTimer(direction: .up)
-    case .scrollDown: startScrollTimer(direction: .down)
+    case .scrollUp, .scrollDown: startScrollTimer(direction: action.type)
     default: break
     }
   }
@@ -153,7 +152,7 @@ class Controller {
     scrollEvent?.post(tap: .cghidEventTap)
   }
 
-  private func startScrollTimer(direction: HoveredSection) {
+  private func startScrollTimer(direction: ActionType) {
     stopScrollTimer()
 
     scrollTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
@@ -161,14 +160,14 @@ class Controller {
       let currentPos = NSEvent.mouseLocation
       var distance: CGFloat
       switch direction {
-      case .up:
+      case .scrollUp:
         distance = initialPos.y - currentPos.y
-      case .down:
+      case .scrollDown:
         distance = currentPos.y - initialPos.y
-        distance = -distance
       default:
         distance = 0
       }
+      if direction == .scrollUp { distance = -distance }
       let scrollAmount = distance * 0.05  // Adjusted multiplier to make scrolling slower
       self.simulateScroll(amount: scrollAmount)
     }
