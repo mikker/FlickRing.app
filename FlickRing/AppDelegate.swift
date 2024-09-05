@@ -5,7 +5,7 @@ import Sparkle
 import SwiftUI
 
 @main
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, SPUStandardUserDriverDelegate {
   @IBOutlet var updateController: SPUStandardUpdaterController!
 
   var statusItem: StatusItem!
@@ -109,6 +109,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       controller.setConfiguring(isConfiguring)
     }
   }
+
+  // MARK: SPUStandardUserDriverDelegate
+
+  var supportsGentleScheduledUpdateReminders: Bool = true
 }
 
 extension Notification.Name {

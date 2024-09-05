@@ -74,7 +74,7 @@ class Controller {
     }
 
     setupEventMonitor()
-    
+
     cancelShowDelay()
 
     // Start monitoring for mouse movement
