@@ -9,5 +9,7 @@ BUILD="$((BUILD + OFFSET))"
 
 agvtool new-version -all ${BUILD}
 
+sleep 3
+
 # restore packages
 xcodebuild -resolvePackageDependencies
