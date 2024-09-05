@@ -206,8 +206,8 @@ class Controller {
     keyDown?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
     keyUp?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
 
-    keyDown?.post(tap: .cghidEventTap)
-    keyUp?.post(tap: .cghidEventTap)
+    keyDown?.post(tap: .cgAnnotatedSessionEventTap)
+    keyUp?.post(tap: .cgAnnotatedSessionEventTap)
   }
 
   private func simulateMouseClick(button: CGMouseButton) {
