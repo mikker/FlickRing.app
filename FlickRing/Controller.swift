@@ -15,6 +15,8 @@ class Controller {
   private var initialMousePosition: CGPoint?
   private var initialEvent: CGEvent?
   @objc dynamic var isConfiguring = false
+  private var moveMonitor: Any?
+  private var showDelayWorkItem: DispatchWorkItem?
 
   init(userState: UserState) {
     self.userState = userState
@@ -58,18 +60,54 @@ class Controller {
   }
 
   func show(type: CGEventType, event: CGEvent) {
-    self.initialMousePosition = NSEvent.mouseLocation
+    let initialLocation = NSEvent.mouseLocation
+    self.initialMousePosition = initialLocation
 
     if type == .otherMouseDown {
       self.initialEvent = event
     }
 
-    window.show {
-      self.setupEventMonitor()
+    let showWindow = { [weak self] in
+      guard let self = self else { return }
+      if self.window.isVisible { return }
+      self.window.show(at: initialLocation) {
+        self.setupEventMonitor()
+      }
     }
+
+    // Cancel any existing delay or monitor
+    cancelShowDelay()
+
+    // Start monitoring for mouse movement
+    self.moveMonitor = NSEvent.addGlobalMonitorForEvents(matching: [
+      .mouseMoved, .leftMouseDragged, .rightMouseDragged, .otherMouseDragged,
+    ]) { [weak self] event in
+      guard let self = self else { return }
+      let currentLocation = event.locationInWindow
+      let distance = hypot(
+        currentLocation.x - initialLocation.x, currentLocation.y - initialLocation.y)
+
+      if distance > 5 {
+        self.cancelShowDelay()
+        showWindow()
+      }
+    }
+
+    // Set up delayed show if no movement
+    let delayWorkItem = DispatchWorkItem { [weak self] in
+      guard let self = self else { return }
+      self.cancelShowDelay()
+      if !self.window.isVisible {
+        showWindow()
+      }
+    }
+    self.showDelayWorkItem = delayWorkItem
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: delayWorkItem)
   }
 
   func hide() {
+    cancelShowDelay()
+
     let selectedSection = self.userState.hoveredSection
 
     self.commit(selectedSection)
@@ -78,31 +116,32 @@ class Controller {
       self.userState.clear()
 
       if let initialEvent = self.initialEvent, selectedSection == .none {
-        self.mouseListener?.executeWithoutListening {
-          let currentLocation = NSEvent.mouseLocation
-          let cgCurrentLocation = CGPoint(
-            x: currentLocation.x, y: CGFloat(NSScreen.main?.frame.height ?? 0) - currentLocation.y)
-
-          let mouseDownEvent = CGEvent(
-            mouseEventSource: nil, mouseType: .otherMouseDown,
-            mouseCursorPosition: cgCurrentLocation,
-            mouseButton: CGMouseButton(
-              rawValue: UInt32(initialEvent.getIntegerValueField(.mouseEventButtonNumber)))!)
-          mouseDownEvent?.post(tap: .cghidEventTap)
-
-          let mouseUpEvent = CGEvent(
-            mouseEventSource: nil, mouseType: .otherMouseUp, mouseCursorPosition: cgCurrentLocation,
-            mouseButton: CGMouseButton(
-              rawValue: UInt32(initialEvent.getIntegerValueField(.mouseEventButtonNumber)))!)
-          mouseUpEvent?.post(tap: .cghidEventTap)
-          
-          self.initialEvent = nil
-        }
+        self.simulateMouseClick(
+          button: CGMouseButton(
+            rawValue: UInt32(initialEvent.getIntegerValueField(.mouseEventButtonNumber)))!)
+        self.initialEvent = nil
       }
     }
 
     removeEventMonitor()
     stopScrollTimer()
+  }
+
+  private func cancelShowDelay() {
+    showDelayWorkItem?.cancel()
+    showDelayWorkItem = nil
+
+    if let monitor = self.moveMonitor {
+      NSEvent.removeMonitor(monitor)
+      self.moveMonitor = nil
+    }
+  }
+
+  @objc private func delayedShow() {
+    if window.isVisible { return }
+    window.show(at: NSEvent.mouseLocation) {
+      self.setupEventMonitor()
+    }
   }
 
   private func commit(_ section: HoveredSection) {
@@ -176,23 +215,28 @@ class Controller {
     keyDown?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
     keyUp?.flags = CGEventFlags(rawValue: keyEvent.modifierFlags)
 
-    keyDown?.post(tap: .cgAnnotatedSessionEventTap)
-    keyUp?.post(tap: .cgAnnotatedSessionEventTap)
+    keyDown?.post(tap: .cghidEventTap)
+    keyUp?.post(tap: .cghidEventTap)
   }
 
   private func simulateMouseClick(button: CGMouseButton) {
     let source = CGEventSource(stateID: .combinedSessionState)
     let currentPos = NSEvent.mouseLocation
+    let cgCurrentLocation = CGPoint(
+      x: currentPos.x, y: CGFloat(NSScreen.main?.frame.height ?? 0) - currentPos.y)
 
-    let clickDown = CGEvent(
-      mouseEventSource: source, mouseType: .otherMouseDown, mouseCursorPosition: currentPos,
-      mouseButton: button)
-    let clickUp = CGEvent(
-      mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: currentPos,
-      mouseButton: button)
+    mouseListener?.executeWithoutListening {
+      let clickDown = CGEvent(
+        mouseEventSource: source, mouseType: .otherMouseDown,
+        mouseCursorPosition: cgCurrentLocation,
+        mouseButton: button)
+      let clickUp = CGEvent(
+        mouseEventSource: source, mouseType: .otherMouseUp, mouseCursorPosition: cgCurrentLocation,
+        mouseButton: button)
 
-    clickDown?.post(tap: .cgAnnotatedSessionEventTap)
-    clickUp?.post(tap: .cgAnnotatedSessionEventTap)
+      clickDown?.post(tap: .cghidEventTap)
+      clickUp?.post(tap: .cghidEventTap)
+    }
   }
 
   private func simulateScroll(amount: Double) {

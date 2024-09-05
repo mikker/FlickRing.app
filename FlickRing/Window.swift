@@ -38,11 +38,11 @@ class Window: NSPanel, NSWindowDelegate {
     //        NSApp.activate(ignoringOtherApps: true)
   }
 
-  func show(after: (() -> Void)?) {
-    centerBelowCursor()
+  func show(at location: NSPoint, completion: @escaping () -> Void) {
+    centerBelow(location: location)
     makeKeyAndOrderFront(nil)
     fadeIn {
-      after?()
+      completion()
     }
   }
 
@@ -53,12 +53,11 @@ class Window: NSPanel, NSWindowDelegate {
     }
   }
 
-  func centerBelowCursor() {
-    let mouseLocation = NSEvent.mouseLocation
+  func centerBelow(location: NSPoint) {
     let windowSize = self.frame.size
     let windowOrigin = NSPoint(
-      x: mouseLocation.x - windowSize.width / 2,
-      y: mouseLocation.y - windowSize.height / 2
+      x: location.x - windowSize.width / 2,
+      y: location.y - windowSize.height / 2
     )
 
     self.setFrameOrigin(windowOrigin)
