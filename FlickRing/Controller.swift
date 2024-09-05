@@ -79,9 +79,8 @@ class Controller {
     cancelShowDelay()
 
     // Start monitoring for mouse movement
-    self.moveMonitor = NSEvent.addGlobalMonitorForEvents(matching: [
-      .mouseMoved, .leftMouseDragged, .rightMouseDragged, .otherMouseDragged,
-    ]) { [weak self] event in
+    self.moveMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.otherMouseDragged]) {
+      [weak self] event in
       guard let self = self else { return }
       let currentLocation = event.locationInWindow
       let distance = hypot(
