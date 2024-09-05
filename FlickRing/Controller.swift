@@ -250,17 +250,9 @@ class Controller {
     scrollTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
       guard let self = self, let initialPos = self.initialMousePosition else { return }
       let currentPos = NSEvent.mouseLocation
-      var distance: CGFloat
-      switch direction {
-      case .scrollUp:
-        distance = initialPos.y - currentPos.y
-      case .scrollDown:
-        distance = currentPos.y - initialPos.y
-      default:
-        distance = 0
-      }
-      if direction == .scrollUp { distance = -distance }
-      let scrollAmount = distance * 0.05  // Adjusted multiplier to make scrolling slower
+      var distance = abs(initialPos.y - currentPos.y)
+      if direction == .scrollDown { distance = -distance }
+      let scrollAmount = distance * 0.05
       self.simulateScroll(amount: scrollAmount)
     }
   }
