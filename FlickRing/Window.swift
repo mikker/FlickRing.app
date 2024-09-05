@@ -23,7 +23,7 @@ class Window: NSPanel, NSWindowDelegate {
     isOpaque = false
     backgroundColor = .clear
     isMovableByWindowBackground = false
-    level = .floating
+    level = .statusBar + 1
 
     let view = MainView(userState: self.controller.userState)
     contentView = NSHostingView(rootView: view)
@@ -62,5 +62,9 @@ class Window: NSPanel, NSWindowDelegate {
     )
 
     self.setFrameOrigin(windowOrigin)
+  }
+
+  override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
+    return frameRect
   }
 }
