@@ -1,8 +1,10 @@
-# Flick Ring
-
 <img src="https://s3.brnbw.com/icon_512px-512pt-1x-ovTH4eX3VPLxnRKNDA0GZG82nm10oZFML5P00RaGxAl1nnMdKtLhaFFOS4DXsI1ba1V9r2xVukLXoX1JIsDazi48pys3bZNVh3oW.png" width="256" height="256" alt="FlickRing.app" />
 
-Action ring for your normie mouse
+**Action ring for your normie mouse.**
+
+Watch the introduction on YouTube:
+
+[![YouTube](https://img.youtube.com/vi/23zQfngkH44/maxresdefault.jpg)](https://www.youtube.com/watch?v=23zQfngkH44&t=3s)
 
 [Download latest version](https://flick-ring-updates.s3.amazonaws.com/FlickRing-latest.zip)
 
