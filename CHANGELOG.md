@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2 (144)
+
+- Darker hover highlight when using clear glass
+
 ## 1.3.1 (141)
 
 - Fix in-app updates failing with "An error occurred while launching the installer"

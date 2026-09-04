@@ -73,7 +73,7 @@ struct MainView: View {
     let section: HoveredSection = [.down, .left, .up, .right][index]
     let isHovered = userState.hoveredSection == section
     if #available(macOS 26, *), selectedTheme == .system {
-      return isHovered ? Color.gray.opacity(0.2) : Color.clear
+      return isHovered ? Color.gray.opacity(glassStyle == .clear ? 0.35 : 0.2) : Color.clear
     }
     let minimumOpacity = selectedTheme == .system ? 0.2 : 0.0
     return Color.white.opacity(isHovered ? 0.5 : minimumOpacity)
