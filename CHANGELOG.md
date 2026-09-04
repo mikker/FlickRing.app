@@ -3,6 +3,7 @@
 ## 1.3.1 (141)
 
 - Fix in-app updates failing with "An error occurred while launching the installer"
+- Updating from 1.3.0 or earlier fails with an installer error. Install this version manually from GitHub or with `brew install mikker/tap/flick-ring`; updates work from 1.3.1 onward
 
 ## 1.3.0 (137)
 
