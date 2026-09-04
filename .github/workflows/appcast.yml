@@ -1,0 +1,50 @@
+name: Appcast
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Updates/appcast.xml
+      - .github/workflows/appcast.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: appcast-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare Pages artifact
+        run: |
+          set -euo pipefail
+          test -f Updates/appcast.xml
+          mkdir -p _site
+          cp Updates/appcast.xml _site/appcast.xml
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload appcast.xml
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

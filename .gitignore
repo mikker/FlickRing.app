@@ -1,2 +1,10 @@
+Carthage/
+*.xcodeproj/xcuserdata/*
+*.xcuserdatad*
+build/
+dist/
 Updates/*
-*xcuserdata*
+!Updates/appcast.xml
+
+**/.claude/settings.local.json
+.env

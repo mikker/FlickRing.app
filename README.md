@@ -6,12 +6,21 @@ Watch the introduction on YouTube:
 
 [![YouTube](https://img.youtube.com/vi/23zQfngkH44/maxresdefault.jpg)](https://www.youtube.com/watch?v=23zQfngkH44&t=3s)
 
-[Download latest version](https://flick-ring-updates.s3.amazonaws.com/FlickRing-latest.zip)
+[Download latest version](https://github.com/mikker/FlickRing/releases/latest) or `brew install mikker/tap/flick-ring`
 
 ## Behind the scenes
 
 - [Part 1](https://x.com/mikker/status/1829146750990344593)
 - [Part 2](https://x.com/mikker/status/1829484136718860775)
+
+## Release
+
+```sh
+cp .env.example .env
+just distribute
+```
+
+Pass `VERSION=1.3.0` to force the next version. Otherwise `just distribute` bumps the patch version, increments the build number, builds + notarizes `FlickRing.app`, uploads `FlickRing.app.zip` to GitHub Releases, updates `CHANGELOG.md`, writes `Updates/appcast.xml`, and updates `../homebrew-tap/Casks/flick-ring.rb`. GitHub Pages publishes the committed `Updates/appcast.xml` at the app's feed URL.
 
 ## License
 
