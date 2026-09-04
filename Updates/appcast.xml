@@ -3,14 +3,13 @@
 <channel>
 <title>FlickRing</title>
 <item>
-<title>1.3.1</title>
-<pubDate>Fri, 04 Sep 2026 12:31:56 +0000</pubDate>
+<title>1.3.2</title>
+<pubDate>Fri, 04 Sep 2026 13:37:55 +0000</pubDate>
 <sparkle:minimumSystemVersion>14.5</sparkle:minimumSystemVersion>
-<enclosure url="https://github.com/mikker/FlickRing/releases/download/v1.3.1/FlickRing.app.zip" sparkle:version="141" sparkle:shortVersionString="1.3.1" length="2125702" type="application/octet-stream" sparkle:edSignature="sSkTkdV2lcWaiJhW1Zs4RdL03/URuFMwxW/IAYK+V/YeVlXvC1qdHC6fxikLcGsl4yPEL9pwMlmbvK+I1Q21Aw=="/>
+<enclosure url="https://github.com/mikker/FlickRing/releases/download/v1.3.2/FlickRing.app.zip" sparkle:version="144" sparkle:shortVersionString="1.3.2" length="2125806" type="application/octet-stream" sparkle:edSignature="6cOhHLV2qy1yTz8OvO9W+OM/HdQObzhqiFNYc5WedUiFPAP5HrqzdgOGG50Y+YRBkqvQlO5k4Xj9eZc02NKhDg=="/>
 <description><![CDATA[
 <ul>
-<li>Fix in-app updates failing with &quot;An error occurred while launching the installer&quot;</li>
-<li>Updating from 1.3.0 or earlier fails with an installer error. Install this version manually from GitHub or with `brew install mikker/tap/flick-ring`; updates work from 1.3.1 onward</li>
+<li>Darker hover highlight when using clear glass</li>
 </ul>
 ]]></description>
 </item>
