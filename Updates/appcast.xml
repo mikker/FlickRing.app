@@ -3,15 +3,13 @@
 <channel>
 <title>FlickRing</title>
 <item>
-<title>1.3.0</title>
-<pubDate>Fri, 04 Sep 2026 12:19:15 +0000</pubDate>
+<title>1.3.1</title>
+<pubDate>Fri, 04 Sep 2026 12:31:56 +0000</pubDate>
 <sparkle:minimumSystemVersion>14.5</sparkle:minimumSystemVersion>
-<enclosure url="https://github.com/mikker/FlickRing/releases/download/v1.3.0/FlickRing.app.zip" sparkle:version="137" sparkle:shortVersionString="1.3.0" length="2125522" type="application/octet-stream" sparkle:edSignature="qn4QYZkCeBPO5BKhyOR2i1h4VCIaccVwrFZprKk4V746mzYWDHdrguEHpFgX1UtQOG28Y5yeqLwGQbj1qWQtDQ=="/>
+<enclosure url="https://github.com/mikker/FlickRing/releases/download/v1.3.1/FlickRing.app.zip" sparkle:version="141" sparkle:shortVersionString="1.3.1" length="2125702" type="application/octet-stream" sparkle:edSignature="sSkTkdV2lcWaiJhW1Zs4RdL03/URuFMwxW/IAYK+V/YeVlXvC1qdHC6fxikLcGsl4yPEL9pwMlmbvK+I1Q21Aw=="/>
 <description><![CDATA[
 <ul>
-<li>Liquid Glass ring on macOS 26 and later, with a Regular or Clear glass option in Settings</li>
-<li>Fix the replayed middle click landing in the wrong spot on secondary displays</li>
-<li>Updates now come from GitHub Releases; the app is also available via `brew install mikker/tap/flick-ring`</li>
+<li>Fix in-app updates failing with &quot;An error occurred while launching the installer&quot;</li>
 </ul>
 ]]></description>
 </item>
