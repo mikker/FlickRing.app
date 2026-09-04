@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 (141)
+
+- Fix in-app updates failing with "An error occurred while launching the installer"
+
 ## 1.3.0 (137)
 
 - Liquid Glass ring on macOS 26 and later, with a Regular or Clear glass option in Settings
