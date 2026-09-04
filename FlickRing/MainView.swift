@@ -11,6 +11,7 @@ import SwiftUI
 struct MainView: View {
   @ObservedObject var userState: UserState
   @Default(.selectedTheme) private var selectedTheme: Theme
+  @Default(.glassStyle) private var glassStyle: GlassStyle
 
   init(userState: UserState) {
     self._userState = ObservedObject(wrappedValue: userState)
@@ -21,20 +22,33 @@ struct MainView: View {
 
   var body: some View {
     ZStack {
-      if selectedTheme == .system {
-        systemThemeView
-      } else {
-        themeCircle
-      }
+      background
       radialSections
     }
     .mask(ringMask)
     .frame(width: MainView.size, height: MainView.size)
   }
 
-  private var systemThemeView: some View {
-    VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+  @ViewBuilder
+  private var background: some View {
+    if #available(macOS 26, *) {
+      glassRing
+      if selectedTheme != .system {
+        themeCircle.opacity(0.6)
+      }
+    } else if selectedTheme == .system {
+      VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+        .frame(width: MainView.size, height: MainView.size)
+    } else {
+      themeCircle
+    }
+  }
+
+  @available(macOS 26, *)
+  private var glassRing: some View {
+    Color.clear
       .frame(width: MainView.size, height: MainView.size)
+      .glassEffect(glassStyle.glass, in: RingShape(holeSize: MainView.centerSize))
   }
 
   private var themeCircle: some View {
@@ -51,18 +65,18 @@ struct MainView: View {
   private var radialSections: some View {
     ForEach(0..<4, id: \.self) { index in
       RadialSection(startAngle: Double(index) * 90 + 45, endAngle: Double(index + 1) * 90 + 45)
-        .fill(Color.white.opacity(sectionOpacity(for: index)))
-        .overlay(
-          RadialSection(startAngle: Double(index) * 90 + 45, endAngle: Double(index + 1) * 90 + 45)
-            .stroke(Color.clear)
-        )
+        .fill(sectionColor(for: index))
     }
   }
 
-  private func sectionOpacity(for index: Int) -> Double {
+  private func sectionColor(for index: Int) -> Color {
     let section: HoveredSection = [.down, .left, .up, .right][index]
+    let isHovered = userState.hoveredSection == section
+    if #available(macOS 26, *), selectedTheme == .system {
+      return isHovered ? Color.gray.opacity(0.2) : Color.clear
+    }
     let minimumOpacity = selectedTheme == .system ? 0.2 : 0.0
-    return userState.hoveredSection == section ? 0.5 : minimumOpacity
+    return Color.white.opacity(isHovered ? 0.5 : minimumOpacity)
   }
 
   private var ringMask: some View {
@@ -75,26 +89,23 @@ struct MainView: View {
           .blendMode(.destinationOut)
       )
   }
+}
 
-  private func updateHoveredSection(for point: NSPoint) {
-    let center = CGPoint(x: MainView.size / 2, y: MainView.size / 2)
-    let dx = point.x - center.x
-    let dy = point.y - center.y
+struct RingShape: Shape {
+  let holeSize: CGFloat
 
-    if dx * dx + dy * dy <= (MainView.centerSize / 2) * (MainView.centerSize / 2) {
-      userState.hoveredSection = .none
-    } else {
-      let angle = atan2(dy, dx) * (180 / .pi)
-      if angle >= -45 && angle < 45 {
-        userState.hoveredSection = .right
-      } else if angle >= 45 && angle < 135 {
-        userState.hoveredSection = .up
-      } else if angle >= 135 || angle < -135 {
-        userState.hoveredSection = .left
-      } else {
-        userState.hoveredSection = .down
-      }
-    }
+  func path(in rect: CGRect) -> Path {
+    var path = Path()
+    let center = CGPoint(x: rect.midX, y: rect.midY)
+    path.addArc(
+      center: center, radius: min(rect.width, rect.height) / 2, startAngle: .zero,
+      endAngle: .degrees(360), clockwise: false)
+    path.closeSubpath()
+    path.addArc(
+      center: center, radius: holeSize / 2, startAngle: .zero, endAngle: .degrees(360),
+      clockwise: true)
+    path.closeSubpath()
+    return path
   }
 }
 

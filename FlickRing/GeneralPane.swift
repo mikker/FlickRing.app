@@ -17,6 +17,7 @@ struct GeneralPane: View {
   @FocusState private var focusedField: String?
 
   @Default(.selectedTheme) private var selectedTheme
+  @Default(.glassStyle) private var glassStyle
 
   private let contentWidth = 480.0
 
@@ -54,6 +55,15 @@ struct GeneralPane: View {
             .background(selectedTheme == theme ? Color.accentColor.opacity(0.2) : Color.clear)
             .cornerRadius(4)
           }
+        }
+        if #available(macOS 26, *) {
+          Picker("Glass", selection: $glassStyle) {
+            ForEach(GlassStyle.allCases) { style in
+              Text(style.rawValue.capitalized).tag(style)
+            }
+          }
+          .pickerStyle(.segmented)
+          .fixedSize()
         }
       }
 

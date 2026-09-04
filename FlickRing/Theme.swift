@@ -31,3 +31,17 @@ enum Theme: String, CaseIterable, Identifiable, Defaults.Serializable {
     }
   }
 }
+
+enum GlassStyle: String, CaseIterable, Identifiable, Defaults.Serializable {
+  case regular, clear
+
+  var id: String { self.rawValue }
+
+  @available(macOS 26, *)
+  var glass: Glass {
+    switch self {
+    case .regular: return .regular
+    case .clear: return .clear
+    }
+  }
+}
