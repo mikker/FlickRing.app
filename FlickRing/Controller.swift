@@ -212,9 +212,10 @@ class Controller {
 
   private func simulateMouseClick(button: CGMouseButton) {
     let source = CGEventSource(stateID: .combinedSessionState)
-    let currentPos = NSEvent.mouseLocation
-    let cgCurrentLocation = CGPoint(
-      x: currentPos.x, y: CGFloat(NSScreen.main?.frame.height ?? 0) - currentPos.y)
+    // CGEvent reports the cursor in global CoreGraphics coordinates, which is what
+    // the synthesized click expects. Flipping NSEvent.mouseLocation by hand breaks
+    // on secondary displays.
+    let cgCurrentLocation = CGEvent(source: nil)?.location ?? .zero
 
     mouseListener?.executeWithoutListening {
       let clickDown = CGEvent(

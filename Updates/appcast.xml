@@ -1,0 +1,39 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>FlickRing</title>
+        <item>
+            <title>1.2.3</title>
+            <pubDate>Thu, 05 Sep 2024 14:03:45 +0200</pubDate>
+            <sparkle:version>31</sparkle:version>
+            <sparkle:shortVersionString>1.2.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://flick-ring-updates.s3.amazonaws.com/FlickRing.b32.zip" length="2137775" type="application/octet-stream" sparkle:edSignature="lXnrw4BGrIesSjlk3gAzUD8VyRWgC4cQJw9WytVwV9BwbuuG0vsnSXoUjFyLrxSHRKyJ4w3D9ICsAg2jGuHEAQ=="/>
+            <sparkle:deltas>
+                <enclosure url="https://flick-ring-updates.s3.amazonaws.com/FlickRing31-29.delta" sparkle:deltaFrom="29" length="13210" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="863040" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="jhhsK5ZaEZ+5AgOi+D452rfgjkxjFrfukkS8dtS1x0xWbx8LcowA9oCxOGmaEgYGfFCT9rbo4P/ESNEUMM60CQ=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
+            <title>1.2.2</title>
+            <pubDate>Thu, 05 Sep 2024 13:55:10 +0200</pubDate>
+            <sparkle:version>29</sparkle:version>
+            <sparkle:shortVersionString>1.2.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://flick-ring-updates.s3.amazonaws.com/FlickRing-latest.zip" length="2137768" type="application/octet-stream" sparkle:edSignature="hyZjGzJPiFOQivTnOWqXeOIhMqL6qbK5oJqa37FOLehuGJ/qezsJ/+Zjunz7tN++vIzOyOUXC4zHiEnDCT0rDA=="/>
+            <sparkle:deltas>
+                <enclosure url="https://flick-ring-updates.s3.amazonaws.com/FlickRing29-26.delta" sparkle:deltaFrom="26" length="23330" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="863040" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="2s2Y+nsbY+PkgStxmCaaCnMV4q7jBMxppaOtKpoeB+b/PLEeOsbt+6USqXHHwTKxuZZK6smKGNK5Za2PKe5sBQ=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
+            <title>1.2.1</title>
+            <pubDate>Thu, 05 Sep 2024 13:19:24 +0200</pubDate>
+            <sparkle:version>26</sparkle:version>
+            <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://flick-ring-updates.s3.amazonaws.com/FlickRing-latest.zip" length="2137744" type="application/octet-stream" sparkle:edSignature="o9GayNCjBH7YgxUWMzIe01xKxjR5PKEmHy2rvq942fQP6n77oCTmLw8dR+WeixOLxQ78n6bVF34OrvOabHeRBQ=="/>
+            <sparkle:deltas>
+                <enclosure url="https://flick-ring-updates.s3.amazonaws.com/FlickRing26-25.delta" sparkle:deltaFrom="25" length="10970" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="863040" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="hTrVkKF9U0/62aqx7YG7WVBfQg1ZLNf4FoRXs16Q09760zHblTHNUQMCOYu7LOhW5/UfOwJz4KXxzQQ4Y+ogAQ=="/>
+            </sparkle:deltas>
+        </item>
+    </channel>
+</rss>
